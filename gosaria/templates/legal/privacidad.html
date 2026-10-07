@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import migas with context %}
+{% from "legal/_titular.html" import dato with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'legal_privacidad')) }}
+    <h1>{{ 'Política de privacidad' if es else 'Privacy policy' }}</h1>
+    <p class="muted">{{ 'Última actualización: 6 de octubre de 2026' if es else 'Last updated: 6 October 2026' }}</p>
+  </div>
+</section>
+<div class="wrap section--tight">
+  <div class="prose">
+  {% if es %}
+    <p>Esta política explica qué datos personales recogemos a través de gosariapamplona.es, para qué los usamos y qué derechos tienes, conforme al Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD).</p>
+
+    <h2>1. Responsable del tratamiento</h2>
+    <ul>
+      <li><strong>Responsable:</strong> {{ dato(TITULAR.razon_social, 'Razón social') }}</li>
+      <li><strong>NIF:</strong> {{ dato(TITULAR.nif, 'NIF') }}</li>
+      <li><strong>Dirección:</strong> {{ TITULAR.domicilio }}</li>
+      <li><strong>Contacto:</strong> <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a></li>
+    </ul>
+
+    <h2>2. Qué datos tratamos, para qué y con qué base</h2>
+    <table>
+      <thead><tr><th>Cuándo</th><th>Datos</th><th>Finalidad</th><th>Base jurídica</th></tr></thead>
+      <tbody>
+        <tr><td>Formulario de contacto</td><td>Nombre, correo, teléfono (opcional) y mensaje</td><td>Responder a tu consulta</td><td>Tu consentimiento (art. 6.1.a RGPD)</td></tr>
+        <tr><td>Solicitud de presupuesto de la sala</td><td>Lo anterior, más fecha, hora, número de personas, tipo de evento y catering</td><td>Preparar y enviarte el presupuesto y, si lo aceptas, gestionar la reserva</td><td>Medidas precontractuales a petición tuya (art. 6.1.b RGPD)</td></tr>
+        <tr><td>Navegación</td><td>Dirección IP y datos técnicos en los registros del servidor</td><td>Seguridad de la web y prevención de abusos</td><td>Interés legítimo (art. 6.1.f RGPD)</td></tr>
+        <tr><td>Analítica (solo si la aceptas)</td><td>Datos de navegación seudonimizados</td><td>Estadísticas agregadas de visitas</td><td>Tu consentimiento (art. 6.1.a RGPD)</td></tr>
+      </tbody>
+    </table>
+    <p>No usamos tus datos para enviarte publicidad ni tomamos decisiones automatizadas sobre ti.</p>
+
+    <h2>3. Cuánto tiempo los conservamos</h2>
+    <ul>
+      <li>Consultas y presupuestos no aceptados: hasta 12 meses después de la última comunicación.</li>
+      <li>Presupuestos aceptados y reservas: durante los plazos que exige la normativa fiscal y mercantil.</li>
+      <li>Registros técnicos del servidor: un máximo de 30 días, salvo que se necesiten para investigar un incidente.</li>
+    </ul>
+
+    <h2>4. Quién puede acceder a tus datos</h2>
+    <p>No cedemos tus datos a terceros salvo obligación legal. Algunos proveedores los tratan por cuenta nuestra, con contrato de encargo de tratamiento:</p>
+    <ul>
+      <li>Proveedor de alojamiento de la web: {{ dato(TITULAR.hosting, 'Proveedor') }}.</li>
+      <li>Microsoft (Microsoft 365), para el correo electrónico.</li>
+      <li>Google (Google Analytics), solo si aceptas las cookies de analítica; y Google Maps, solo si pulsas «Cargar el mapa».</li>
+    </ul>
+    <p>Microsoft y Google pueden tratar datos fuera del Espacio Económico Europeo. Ambas empresas están adheridas al Marco de Privacidad de Datos UE-EE. UU. y aplican las cláusulas contractuales tipo de la Comisión Europea.</p>
+
+    <h2>5. Tus derechos</h2>
+    <p>Puedes pedir el acceso, la rectificación o la supresión de tus datos, la limitación u oposición a su tratamiento y su portabilidad, así como retirar tu consentimiento en cualquier momento, escribiendo a <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a>. Te responderemos en el plazo de un mes.</p>
+    <p>Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>).</p>
+
+    <h2>6. Menores de edad</h2>
+    <p>La web no está dirigida a menores de 14 años. Si eres menor de esa edad, no nos envíes datos personales sin el consentimiento de tus padres o tutores.</p>
+
+    <h2>7. Seguridad</h2>
+    <p>La web funciona con conexión cifrada (HTTPS) y aplicamos medidas técnicas y organizativas para proteger tus datos frente a pérdidas, accesos no autorizados o usos indebidos.</p>
+  {% else %}
+    <p>This policy explains what personal data we collect through gosariapamplona.es, why we use it and what your rights are, under Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).</p>
+
+    <h2>1. Data controller</h2>
+    <ul>
+      <li><strong>Controller:</strong> {{ dato(TITULAR.razon_social, 'Company name') }}</li>
+      <li><strong>Tax ID (NIF):</strong> {{ dato(TITULAR.nif, 'NIF') }}</li>
+      <li><strong>Address:</strong> {{ TITULAR.domicilio }}</li>
+      <li><strong>Contact:</strong> <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a></li>
+    </ul>
+
+    <h2>2. What data we process, why and on what basis</h2>
+    <table>
+      <thead><tr><th>When</th><th>Data</th><th>Purpose</th><th>Legal basis</th></tr></thead>
+      <tbody>
+        <tr><td>Contact form</td><td>Name, email, phone (optional) and message</td><td>To answer your enquiry</td><td>Your consent (Art. 6(1)(a) GDPR)</td></tr>
+        <tr><td>Events room quote request</td><td>The above, plus date, time, number of guests, type of event and catering</td><td>To prepare and send your quote and, if you accept it, manage the booking</td><td>Pre-contractual steps at your request (Art. 6(1)(b) GDPR)</td></tr>
+        <tr><td>Browsing</td><td>IP address and technical data in server logs</td><td>Website security and abuse prevention</td><td>Legitimate interest (Art. 6(1)(f) GDPR)</td></tr>
+        <tr><td>Analytics (only if you accept)</td><td>Pseudonymised browsing data</td><td>Aggregated visit statistics</td><td>Your consent (Art. 6(1)(a) GDPR)</td></tr>
+      </tbody>
+    </table>
+    <p>We do not use your data to send you advertising and we do not make automated decisions about you.</p>
+
+    <h2>3. How long we keep it</h2>
+    <ul>
+      <li>Enquiries and quotes that are not accepted: up to 12 months after our last exchange.</li>
+      <li>Accepted quotes and bookings: for the periods required by tax and commercial law.</li>
+      <li>Technical server logs: up to 30 days, unless needed to investigate an incident.</li>
+    </ul>
+
+    <h2>4. Who can access your data</h2>
+    <p>We do not share your data with third parties unless required by law. Some providers process it on our behalf under a data processing agreement:</p>
+    <ul>
+      <li>Website hosting provider: {{ dato(TITULAR.hosting, 'Provider') }}.</li>
+      <li>Microsoft (Microsoft 365), for email.</li>
+      <li>Google (Google Analytics), only if you accept analytics cookies; and Google Maps, only if you click “Load the map”.</li>
+    </ul>
+    <p>Microsoft and Google may process data outside the European Economic Area. Both companies participate in the EU-US Data Privacy Framework and apply the European Commission's standard contractual clauses.</p>
+
+    <h2>5. Your rights</h2>
+    <p>You can request access to, rectification or erasure of your data, restriction of or objection to its processing and data portability, and withdraw your consent at any time, by writing to <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a>. We will reply within one month.</p>
+    <p>If you believe we have not handled your data properly, you can lodge a complaint with the Spanish Data Protection Agency (<a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>).</p>
+
+    <h2>6. Children</h2>
+    <p>This website is not aimed at children under 14. If you are under 14, please do not send us personal data without your parents' or guardians' consent.</p>
+
+    <h2>7. Security</h2>
+    <p>The website uses an encrypted connection (HTTPS) and we apply technical and organisational measures to protect your data against loss, unauthorised access or misuse.</p>
+    <p class="muted">The Spanish version of this policy prevails in case of discrepancy.</p>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

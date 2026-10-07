@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="adm-login">
+  <h1>Entrar al panel</h1>
+  <p class="adm-muted">Desde aquí se edita la carta, el catering, las tarifas de la sala, la agenda y el aviso destacado.</p>
+  {% if error %}<p class="adm-error" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" class="adm-form">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <label for="clave">Contraseña</label>
+    <input id="clave" name="clave" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit" class="adm-btn">Entrar</button>
+  </form>
+</div>
+{% endblock %}

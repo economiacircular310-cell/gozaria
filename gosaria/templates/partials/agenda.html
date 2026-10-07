@@ -1,0 +1,14 @@
+{% from "partials/macros.html" import icon with context %}
+<ul class="agenda">
+  {% for e in eventos %}
+  <li class="evento">
+    <div class="evento-fecha" aria-hidden="true"><b>{{ e.inicio.day }}</b><span>{{ ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][e.inicio.month - 1] if lang == 'es' else ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][e.inicio.month - 1] }}</span></div>
+    <div>
+      <h3>{{ e.titulo }}</h3>
+      <p class="small"><time datetime="{{ e.inicio.isoformat() }}">{{ fecha_larga(e.inicio, lang) }}</time>{% if e.precio %} · {{ e.precio }}{% endif %}</p>
+      {% if e.desc %}<p>{{ e.desc }}</p>{% endif %}
+      {% if e.enlace %}<p class="mt-sm"><a class="link-arrow" href="{{ e.enlace }}" rel="noopener" target="_blank">{{ 'Más detalles e inscripción' if lang == 'es' else 'Details and sign-up' }}{{ icon('flecha') }}</a></p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>

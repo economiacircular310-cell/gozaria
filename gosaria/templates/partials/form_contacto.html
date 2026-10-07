@@ -1,0 +1,14 @@
+{% from "partials/macros.html" import icon, campo, ocultos, privacidad with context %}
+{% set es = lang == 'es' %}
+<form class="form" method="post" action="{{ page_url('contacto', lang) }}#formulario" data-form novalidate>
+  {% if error_general %}<div class="alerta alerta--error" role="alert" tabindex="-1" data-foco>{{ icon('alerta') }}<span>{{ error_general }}</span></div>{% endif %}
+  {{ ocultos(csrf, timer, lang) }}
+  <div class="form-grid form-grid--2">
+    {{ campo('nombre', t(lang, 'f_nombre'), datos, errores, attrs='autocomplete="name"') }}
+    {{ campo('email', t(lang, 'f_email'), datos, errores, tipo='email', attrs='autocomplete="email"') }}
+  </div>
+  {{ campo('telefono', t(lang, 'f_telefono'), datos, errores, tipo='tel', requerido=false, opcional_txt=t(lang, 'f_opcional'), attrs='autocomplete="tel"') }}
+  {{ campo('mensaje', t(lang, 'f_mensaje'), datos, errores, tipo='textarea') }}
+  {{ privacidad(lang, datos, errores) }}
+  <div><button class="btn btn--accent" type="submit">{{ t(lang, 'f_enviar') }}</button></div>
+</form>

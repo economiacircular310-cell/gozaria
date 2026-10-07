@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% block title %}Aviso destacado{% endblock %}
+{% block content %}
+<h1>Aviso destacado</h1>
+<p class="adm-muted">Es la barra de color que aparece encima de la cabecera en todas las páginas. Úsala para premios, vacaciones, cambios de horario o un taller especial.</p>
+<form method="post" class="adm-form">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+  <fieldset class="adm-checks"><legend>Estado</legend>
+    <label><input type="checkbox" name="aviso_activo" value="1" {% if ajustes.get('aviso_activo') == '1' %}checked{% endif %}> Mostrar el aviso</label>
+  </fieldset>
+  <div class="adm-2">
+    <div><label for="aviso_es">Texto (español)</label><textarea id="aviso_es" name="aviso_es" rows="2" maxlength="200">{{ ajustes.get('aviso_es', '') }}</textarea></div>
+    <div><label for="aviso_en">Texto (inglés)</label><textarea id="aviso_en" name="aviso_en" rows="2" maxlength="200">{{ ajustes.get('aviso_en', '') }}</textarea></div>
+    <div><label for="aviso_enlace">Enlace <span class="adm-muted">(opcional, https://…)</span></label><input id="aviso_enlace" name="aviso_enlace" type="url" value="{{ ajustes.get('aviso_enlace', '') }}"></div>
+    <div></div>
+    <div><label for="aviso_enlace_es">Texto del enlace (español)</label><input id="aviso_enlace_es" name="aviso_enlace_es" maxlength="40" value="{{ ajustes.get('aviso_enlace_es', '') }}"></div>
+    <div><label for="aviso_enlace_en">Texto del enlace (inglés)</label><input id="aviso_enlace_en" name="aviso_enlace_en" maxlength="40" value="{{ ajustes.get('aviso_enlace_en', '') }}"></div>
+  </div>
+  <button type="submit" class="adm-btn">Guardar</button>
+</form>
+{% endblock %}

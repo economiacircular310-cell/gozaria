@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="section">
+  <div class="wrap error-page">
+    <p class="eyebrow">404</p>
+    <h1>{{ 'Esta página no existe' if es else 'This page does not exist' }}</h1>
+    <p class="lead">{{ 'Puede que el enlace sea antiguo o tenga un error. Estas páginas sí funcionan:' if es else 'The link may be old or mistyped. These pages do work:' }}</p>
+    <div class="btn-row">
+      <a class="btn btn--accent" href="{{ page_url('carta', lang) }}">{{ t(lang, 'ver_carta') }}</a>
+      <a class="btn btn--ghost" href="{{ page_url('inicio', lang) }}">{{ t(lang, 'volver_inicio') }}</a>
+      <a class="btn btn--ghost" href="{{ page_url('contacto', lang) }}">{{ t(lang, 'nav_contacto') }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

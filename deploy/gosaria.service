@@ -1,0 +1,24 @@
+[Unit]
+Description=Web de Gosaria Pamplona (Gunicorn)
+After=network.target
+
+[Service]
+User=__USUARIO__
+Group=__USUARIO__
+WorkingDirectory=__DESTINO__
+ExecStart=__DESTINO__/.venv/bin/gunicorn --workers 2 --threads 2 --bind 127.0.0.1:__PUERTO__ --access-logfile - --error-logfile - app:app
+Restart=always
+RestartSec=3
+
+# Endurecimiento: la app solo puede escribir en instance/ (base de datos)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=__DESTINO__/instance
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

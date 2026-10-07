@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ SECCIONES[seccion] }}{% endblock %}
+{% block content %}
+<div class="adm-head">
+  <h1>{{ SECCIONES[seccion] }}</h1>
+  <a class="adm-btn" href="{{ url_for('admin.categoria', seccion=seccion) }}">+ Nueva categoría</a>
+</div>
+<p class="adm-muted">Precios con IVA. Deja el precio vacío para mostrar «A consultar». Desmarca «Visible» para ocultar un plato sin borrarlo.</p>
+{% for c in categorias %}
+<section class="adm-cat" id="cat-{{ c.id }}">
+  <div class="adm-head">
+    <h2>{{ c.nombre_es }} <span class="adm-muted">/ {{ c.nombre_en or '—' }}</span></h2>
+    <div class="adm-acciones">
+      <a href="{{ url_for('admin.plato', categoria=c.id) }}" class="adm-btn adm-btn--sec">+ Añadir</a>
+      <a href="{{ url_for('admin.categoria', cat_id=c.id) }}" class="adm-link">Editar categoría</a>
+    </div>
+  </div>
+  {% if c.nota_es %}<p class="adm-muted">{{ c.nota_es }}</p>{% endif %}
+  {% if platos[c.id] %}
+  <table class="adm-tabla">
+    <thead><tr><th>Orden</th><th>Plato</th><th>Precio</th><th>Etiquetas</th><th></th></tr></thead>
+    <tbody>
+      {% for p in platos[c.id] %}
+      <tr class="{{ '' if p.visible else 'adm-oculto' }}">
+        <td>{{ p.orden }}</td>
+        <td><strong>{{ p.nombre_es }}</strong>{% if p.unidades_es %} <span class="adm-muted">({{ p.unidades_es }})</span>{% endif %}<br><span class="adm-muted">{{ p.desc_es }}</span></td>
+        <td class="adm-num">{% if p.precio_cent is none %}A consultar{% else %}{{ '%.2f'|format(p.precio_cent / 100)|replace('.', ',') }} €{{ '/hora' if p.por_hora }}{% endif %}</td>
+        <td>{% if p.vegetariano %}<span class="adm-tag">Veg</span>{% endif %}{% if p.destacado %}<span class="adm-tag">Destacado</span>{% endif %}{% if not p.visible %}<span class="adm-tag adm-tag--gris">Oculto</span>{% endif %}</td>
+        <td><a href="{{ url_for('admin.plato', plato_id=p.id) }}" class="adm-link">Editar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="adm-muted">Sin platos. En la web se muestra solo la nota de la categoría.</p>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}

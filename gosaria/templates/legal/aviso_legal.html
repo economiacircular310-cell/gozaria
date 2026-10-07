@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import migas with context %}
+{% from "legal/_titular.html" import dato with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'legal_aviso')) }}
+    <h1>{{ t(lang, 'legal_aviso') }}</h1>
+    <p class="muted">{{ 'Última actualización: 6 de octubre de 2026' if es else 'Last updated: 6 October 2026' }}</p>
+  </div>
+</section>
+<div class="wrap section--tight">
+  <div class="prose">
+  {% if es %}
+    <h2>1. Titular de la web</h2>
+    <p>En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE), se informa de los datos del titular de gosariapamplona.es:</p>
+    <ul>
+      <li><strong>Titular:</strong> {{ dato(TITULAR.razon_social, 'Razón social') }}</li>
+      <li><strong>NIF:</strong> {{ dato(TITULAR.nif, 'NIF') }}</li>
+      <li><strong>Domicilio:</strong> {{ TITULAR.domicilio }}</li>
+      <li><strong>Correo electrónico:</strong> <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a></li>
+      {% if TITULAR.registro %}<li><strong>Datos registrales:</strong> {{ TITULAR.registro }}</li>{% endif %}
+    </ul>
+    <h2>2. Objeto</h2>
+    <p>Esta web informa sobre la cafetería Gosaria (Plaza Salesianos, 8, Pamplona): su carta, horarios, sala para eventos, catering y actividades. Los precios publicados son orientativos e incluyen IVA; el precio aplicable es el vigente en el local en el momento de la compra.</p>
+    <h2>3. Condiciones de uso</h2>
+    <p>Al navegar por la web aceptas usarla de forma lícita y no realizar acciones que puedan dañarla, sobrecargarla o impedir su uso normal. Los formularios deben usarse solo para enviar consultas reales.</p>
+    <h2>4. Propiedad intelectual</h2>
+    <p>Los textos, fotografías, logotipos y diseño de esta web pertenecen al titular o se usan con permiso. No se permite reproducirlos con fines comerciales sin autorización por escrito. Puedes compartir enlaces a cualquier página.</p>
+    <h2>5. Responsabilidad y enlaces</h2>
+    <p>Trabajamos para que la información sea correcta y esté actualizada, pero pueden producirse errores puntuales en horarios, platos o precios. La web enlaza a servicios de terceros (Instagram, Google Maps y plataformas de reparto); no somos responsables de sus contenidos ni de sus políticas de privacidad.</p>
+    <h2>6. Legislación aplicable</h2>
+    <p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales de Pamplona, salvo que la normativa de consumidores establezca otro fuero.</p>
+  {% else %}
+    <h2>1. Website owner</h2>
+    <p>In accordance with Article 10 of Spanish Law 34/2002 on information society services and e-commerce (LSSI-CE), the owner of gosariapamplona.es is:</p>
+    <ul>
+      <li><strong>Owner:</strong> {{ dato(TITULAR.razon_social, 'Company name') }}</li>
+      <li><strong>Tax ID (NIF):</strong> {{ dato(TITULAR.nif, 'NIF') }}</li>
+      <li><strong>Address:</strong> {{ TITULAR.domicilio }}</li>
+      <li><strong>Email:</strong> <a href="mailto:{{ TITULAR.email }}">{{ TITULAR.email }}</a></li>
+      {% if TITULAR.registro %}<li><strong>Registration details:</strong> {{ TITULAR.registro }}</li>{% endif %}
+    </ul>
+    <h2>2. Purpose</h2>
+    <p>This website provides information about Gosaria café (Plaza Salesianos, 8, Pamplona): its menu, opening hours, events room, catering and activities. Published prices are for guidance and include VAT; the price that applies is the one in force at the café at the time of purchase.</p>
+    <h2>3. Terms of use</h2>
+    <p>By browsing this website you agree to use it lawfully and not to do anything that could damage it, overload it or prevent its normal use. Forms must only be used to send genuine enquiries.</p>
+    <h2>4. Intellectual property</h2>
+    <p>The texts, photographs, logos and design of this website belong to the owner or are used with permission. They may not be reproduced for commercial purposes without written authorisation. You are welcome to share links to any page.</p>
+    <h2>5. Liability and links</h2>
+    <p>We work to keep the information accurate and up to date, but occasional errors in opening hours, dishes or prices may occur. The website links to third-party services (Instagram, Google Maps and delivery platforms); we are not responsible for their content or privacy policies.</p>
+    <h2>6. Applicable law</h2>
+    <p>This legal notice is governed by Spanish law. Any dispute shall be submitted to the courts of Pamplona, unless consumer protection rules establish a different jurisdiction.</p>
+    <p class="muted">The Spanish version of this notice prevails in case of discrepancy.</p>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

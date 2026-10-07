@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% set c = categoria or {} %}
+{% block title %}Categoría{% endblock %}
+{% block content %}
+<p><a class="adm-link" href="{{ url_for('admin.carta', seccion=seccion) }}">← {{ SECCIONES[seccion] }}</a></p>
+<h1>{{ 'Editar categoría' if categoria and categoria.id else 'Nueva categoría' }}</h1>
+{% if error %}<p class="adm-error" role="alert">{{ error }}</p>{% endif %}
+<form method="post" class="adm-form">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+  <input type="hidden" name="seccion" value="{{ seccion }}">
+  <div class="adm-2">
+    <div><label for="nombre_es">Nombre (español)</label><input id="nombre_es" name="nombre_es" required maxlength="80" value="{{ c.nombre_es or '' }}"></div>
+    <div><label for="nombre_en">Nombre (inglés)</label><input id="nombre_en" name="nombre_en" maxlength="80" value="{{ c.nombre_en or '' }}"></div>
+    <div><label for="nota_es">Nota (español)</label><textarea id="nota_es" name="nota_es" rows="3" maxlength="500">{{ c.nota_es or '' }}</textarea></div>
+    <div><label for="nota_en">Nota (inglés)</label><textarea id="nota_en" name="nota_en" rows="3" maxlength="500">{{ c.nota_en or '' }}</textarea></div>
+    <div><label for="orden">Orden</label><input id="orden" name="orden" type="number" value="{{ c.orden or 0 }}"></div>
+  </div>
+  <button type="submit" class="adm-btn">Guardar</button>
+</form>
+{% if categoria and categoria.id %}
+<form method="post" action="{{ url_for('admin.categoria_borrar', cat_id=categoria.id) }}" class="adm-borrar">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+  <button type="submit" class="adm-btn adm-btn--peligro">Eliminar la categoría y todos sus platos</button>
+</form>
+{% endif %}
+{% endblock %}

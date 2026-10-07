@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% block title %}Mensajes{% endblock %}
+{% block content %}
+<h1>Mensajes</h1>
+<p class="adm-muted">Mensajes de los formularios de contacto y de presupuesto de la sala. Por protección de datos, borra los que ya no necesites (como máximo, 12 meses después de la última comunicación).</p>
+{% for m in mensajes %}
+<article class="adm-msg">
+  <header class="adm-head">
+    <h2>{{ 'Presupuesto de sala' if m.tipo == 'sala' else 'Contacto' }} · {{ m.nombre }}</h2>
+    <span class="adm-muted">{{ m.creado|replace('T', ' ') }}{% if not m.enviado_email %} · <span class="adm-tag adm-tag--gris">no enviado por correo</span>{% endif %}</span>
+  </header>
+  <p><a href="mailto:{{ m.email }}">{{ m.email }}</a>{% if m.telefono %} · {{ m.telefono }}{% endif %}</p>
+  {% if m.tipo == 'sala' %}
+  <p><strong>{{ m.datos.get('tipo') }}</strong> · {{ m.datos.get('fecha') }}{% if m.datos.get('hora') %} a las {{ m.datos.get('hora') }}{% endif %} · {{ m.datos.get('personas') }} personas{% if m.datos.get('duracion') %} · {{ m.datos.get('duracion') }} h{% endif %} · catering: {{ 'sí' if m.datos.get('catering') else 'no' }}</p>
+  {% endif %}
+  {% if m.datos.get('mensaje') %}<p class="adm-texto">{{ m.datos.get('mensaje') }}</p>{% endif %}
+  <form method="post" action="{{ url_for('admin.mensaje_borrar', mensaje_id=m.id) }}">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <button type="submit" class="adm-link adm-link--peligro">Borrar</button>
+  </form>
+</article>
+{% else %}
+<p>No hay mensajes.</p>
+{% endfor %}
+{% endblock %}

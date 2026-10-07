@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, picture, plato, migas with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'nav_carta')) }}
+    <h1>{{ 'Carta' if es else 'Menu' }}</h1>
+    <p class="lead">{{ 'Cocina abierta todo el día: del desayuno a la cena, con pan de masa madre, producto fresco y opciones vegetarianas.' if es else 'Our kitchen is open all day, from breakfast to dinner, with sourdough bread, fresh produce and vegetarian options.' }}</p>
+    <div class="carta-info">
+      <span>{{ t(lang, 'iva') }}</span>
+      <span>{{ icon('hoja', 'icono-inline') }} = {{ t(lang, 'veg') }}</span>
+      <label class="filtro" hidden><input type="checkbox" id="solo-veg"> {{ t(lang, 'solo_veg') }}</label>
+      <span id="filtro-estado" class="sr-only" aria-live="polite"></span>
+    </div>
+  </div>
+</section>
+
+<nav class="cat-nav" aria-label="{{ 'Categorías de la carta' if es else 'Menu sections' }}">
+  <div class="wrap">
+    <ul>
+      {% for s in secciones %}<li><a href="#{{ s.slug }}">{{ s.nombre }}</a></li>{% endfor %}
+    </ul>
+  </div>
+</nav>
+
+<div class="section section--tight">
+  <div class="wrap carta-layout">
+    <div id="carta">
+      {% for s in secciones %}
+      {% set veg = s.platos|selectattr('vegetariano')|list|length %}
+      <section class="carta-cat" id="{{ s.slug }}" aria-labelledby="h-{{ s.slug }}" data-veg-count="{{ veg if s.platos else 1 }}">
+        <header>
+          <h2 id="h-{{ s.slug }}">{{ s.nombre }}</h2>
+          {% if s.nota and s.platos %}<p class="carta-nota">{{ s.nota }}</p>{% endif %}
+        </header>
+        {% if s.platos %}
+        <ul class="menu-list carta-cols">
+          {% for p in s.platos %}{{ plato(p, lang) }}{% endfor %}
+        </ul>
+        {% else %}
+        <p class="carta-nota carta-nota--caja">{{ s.nota }}</p>
+        {% endif %}
+      </section>
+      {% endfor %}
+
+      <section class="carta-cat" aria-labelledby="h-alergenos">
+        <header><h2 id="h-alergenos">{{ 'Alergias e intolerancias' if es else 'Allergies and intolerances' }}</h2></header>
+        <p class="measure">{{ 'Tenemos la información de alérgenos de todos nuestros platos: pídela al personal antes de pedir. Tenemos productos elaborados sin gluten; pregúntanos qué hay ese día.' if es else 'We have allergen information for every dish: please ask our staff before ordering. We also have gluten-free products; ask us what is available that day.' }}</p>
+      </section>
+    </div>
+
+    <aside class="carta-aside" aria-label="{{ 'Fotos de la carta' if es else 'Menu photos' }}">
+      {{ picture('desayuno', "(min-width: 900px) 300px, calc(100vw - 32px)") }}
+      {{ picture('bebidas', "(min-width: 900px) 300px, calc(100vw - 32px)") }}
+      <div class="card">
+        <h3>{{ '¿Un evento?' if es else 'Planning an event?' }}</h3>
+        <p>{{ 'Preparamos catering dulce y salado para la sala o para llevar.' if es else 'We prepare sweet and savoury catering for our room or to take away.' }}</p>
+        <a class="link-arrow" href="{{ page_url('sala', lang) }}#catering">{{ 'Ver el catering' if es else 'See catering' }}{{ icon('flecha') }}</a>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

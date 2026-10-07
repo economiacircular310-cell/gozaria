@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block title %}Agenda{% endblock %}
+{% block content %}
+<div class="adm-head">
+  <h1>Agenda</h1>
+  <a class="adm-btn" href="{{ url_for('admin.evento') }}">+ Nuevo evento</a>
+</div>
+<p class="adm-muted">Los eventos aparecen en la portada y en la página de la sala hasta que terminan. Si no hay ninguno, la sección no se muestra.</p>
+{% if eventos %}
+<table class="adm-tabla">
+  <thead><tr><th>Fecha</th><th>Evento</th><th>Estado</th><th></th></tr></thead>
+  <tbody>
+    {% for e in eventos %}
+    <tr class="{{ '' if e.visible else 'adm-oculto' }}">
+      <td class="adm-num">{{ e.inicio|replace('T', ' ') }}</td>
+      <td><strong>{{ e.titulo_es }}</strong><br><span class="adm-muted">{{ e.desc_es[:120] }}</span></td>
+      <td>{% if (e.fin or e.inicio) < ahora %}<span class="adm-tag adm-tag--gris">Pasado</span>{% elif not e.visible %}<span class="adm-tag adm-tag--gris">Oculto</span>{% else %}<span class="adm-tag">Publicado</span>{% endif %}</td>
+      <td><a class="adm-link" href="{{ url_for('admin.evento', evento_id=e.id) }}">Editar</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Todavía no hay eventos.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+# Configuración local y secretos
+.env
+
+# Base de datos (SQLite) y datos del servidor
+instance/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

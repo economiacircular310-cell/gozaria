@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, picture, migas, preload with context %}
+{% set card_sizes = "(min-width: 1200px) 370px, (min-width: 900px) 30vw, calc(100vw - 32px)" %}
+
+{% block preload %}{{ preload('acai', card_sizes) }}{% endblock %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'nav_espacio')) }}
+    <h1>{{ 'Un espacio de conexión' if es else 'A place to connect' }}</h1>
+    <p class="lead">{{ 'Gosaria abrió en 2024 en la Plaza Salesianos con una idea sencilla: un sitio donde quedar a desayunar, trabajar un rato, aprender algo nuevo o celebrar.' if es else 'Gosaria opened in 2024 on Plaza Salesianos with a simple idea: a place to meet for breakfast, get some work done, learn something new or celebrate.' }}</p>
+  </div>
+</section>
+
+<section class="section section--tight" aria-label="{{ 'Sabor, comunidad y conexión' if es else 'Flavour, community and connection' }}">
+  <div class="wrap cards cards--3">
+    <article class="card card--foto">
+      {{ picture('acai', card_sizes, eager=true) }}
+      <h2 class="h-card">{{ 'Sabor' if es else 'Flavour' }}</h2>
+      <p>{{ 'Café de especialidad, brunch todo el día y repostería hecha aquí. Para el 2.º campeonato de café preparamos «Caramellow»: affogato de dulce de leche, doble espresso de Brasil y crema de caramelo salado.' if es else 'Specialty coffee, all-day brunch and pastries made in-house. For the 2nd coffee championship we created “Caramellow”: a dulce de leche affogato with a double Brazilian espresso and salted caramel cream.' }}</p>
+    </article>
+    <article class="card card--foto">
+      {{ picture('taller', card_sizes) }}
+      <h2 class="h-card">{{ 'Comunidad' if es else 'Community' }}</h2>
+      <p>{{ 'La sala acoge talleres, clases y exposiciones de creadores locales. En la tienda tenemos productos de aquí y cervezas artesanas navarras.' if es else 'Our room hosts workshops, classes and exhibitions by local creators. In our shop you will find local products and craft beers from Navarra.' }}</p>
+    </article>
+    <article class="card card--foto">
+      {{ picture('salon', card_sizes) }}
+      <h2 class="h-card">{{ 'Conexión' if es else 'Connection' }}</h2>
+      <p>{{ 'Mesas altas, sofás, terraza y mucha luz. Entre semana es un buen sitio para trabajar con el portátil; los fines de semana, para quedar con amigos y familia.' if es else 'Tall tables, sofas, a terrace and plenty of light. On weekdays it is a good place to work on your laptop; at weekends, to meet friends and family.' }}</p>
+    </article>
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="local-titulo">
+  <div class="wrap carta-grid">
+    <div>
+      <h2 id="local-titulo">{{ 'El local' if es else 'The venue' }}</h2>
+      <ul class="lista-check mt">
+        {% for icono, texto in ([('luz', 'Amplio y luminoso, con distintas zonas'), ('terraza', 'Terraza exterior'), ('perro', 'Pet friendly: tu perro puede entrar'), ('silla', 'Acceso en silla de ruedas, a pie de calle'), ('bolsa', 'Productos locales y cervezas artesanas navarras'), ('espiga', 'Productos elaborados sin gluten')] if es else [('luz', 'Bright and spacious, with different areas'), ('terraza', 'Outdoor terrace'), ('perro', 'Dog friendly: your dog can come in'), ('silla', 'Step-free wheelchair access'), ('bolsa', 'Local products and craft beers from Navarra'), ('espiga', 'Gluten-free products')]) %}
+        <li>{{ icon(icono) }}<span>{{ texto }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="card card--accent">
+      {{ icon('trofeo', 'icono-grande') }}
+      <h2 class="h-card">{{ 'Finalistas a «Cafetería con más encanto»' if es else 'Finalists for “Most charming café”' }}</h2>
+      <p>{{ 'En los I Premios de Hostelería de Navarra (2026). Gracias a todas las personas que nos votáis y venís cada día.' if es else 'At the 1st Navarra Hospitality Awards (2026). Thank you to everyone who voted for us and comes by every day.' }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="{{ 'Galería de fotos' if es else 'Photo gallery' }}">
+  <div class="wrap mosaico">
+    {% for n in ['local-lleno', 'rincon', 'barra', 'mesa-alta', 'bebidas', 'desayuno'] %}
+    {{ picture(n, "(min-width: 1200px) 380px, (min-width: 640px) 31vw, 46vw") }}
+    {% endfor %}
+  </div>
+</section>
+
+{% include "partials/visita.html" %}
+{% endblock %}

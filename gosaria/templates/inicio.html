@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, picture, plato, preload with context %}
+{% set hero_sizes = "(min-width: 1200px) 540px, (min-width: 900px) 45vw, calc(100vw - 32px)" %}
+
+{% block preload %}{{ preload('desayuno', hero_sizes) }}{% endblock %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">{{ icon('pin') }} Plaza Salesianos 8 · Pamplona</p>
+      {% if es %}
+      <h1>Café de especialidad y brunch <em>todo el día</em></h1>
+      <p class="lead">Tostadas de pan de masa madre, bowls, smash burgers y repostería artesana, en un local amplio y luminoso al que puedes venir con tu perro.</p>
+      {% else %}
+      <h1>Specialty coffee and brunch <em>all day long</em></h1>
+      <p class="lead">Sourdough toasts, bowls, smash burgers and homemade pastries, in a bright, spacious café where your dog is welcome too.</p>
+      {% endif %}
+      <div class="btn-row">
+        <a class="btn btn--accent" href="{{ page_url('carta', lang) }}">{{ icon('carta') }}{{ t(lang, 'ver_carta') }}</a>
+        <a class="btn btn--ghost" href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ icon('pin') }}{{ t(lang, 'como_llegar') }}</a>
+        {% if NEGOCIO.glovo %}<a class="btn btn--ghost" href="{{ NEGOCIO.glovo }}" rel="noopener" target="_blank">{{ icon('reparto') }}{{ t(lang, 'pedir_domicilio') }}</a>{% endif %}
+      </div>
+      <p class="hero-estado"><span class="estado" data-estado data-abierto="{{ 1 if estado.abierto else 0 }}">{{ estado.texto }}</span></p>
+    </div>
+    <div class="hero-media">
+      {{ picture('desayuno', hero_sizes, eager=true) }}
+      <span class="sello" aria-hidden="true">{{ 'Espacio de conexión' if es else 'A place to connect' }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="puntos-titulo">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="puntos-titulo">{{ 'Qué vas a encontrar en Gosaria' if es else 'What you will find at Gosaria' }}</h2>
+    </div>
+    <ul class="puntos">
+      {% for icono, titulo, texto in puntos %}
+      <li class="punto">{{ icon(icono) }}<h3>{{ titulo }}</h3><p>{{ texto }}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section band" aria-labelledby="carta-titulo">
+  <div class="wrap carta-grid">
+    <div>
+      <div class="section-head">
+        <p class="eyebrow">{{ icon('carta') }} {{ 'De la carta' if es else 'From the menu' }}</p>
+        <h2 id="carta-titulo">{{ 'Para desayunar, comer o merendar' if es else 'For breakfast, lunch or an afternoon treat' }}</h2>
+        <p>{{ 'Algunos de los platos que más se piden. La carta completa tiene tostadas, bowls, sándwiches, ensaladas, hamburguesas y bocadillos.' if es else 'A few of the most popular dishes. The full menu has toasts, bowls, sandwiches, salads, burgers and bocadillos.' }}</p>
+      </div>
+      <ul class="menu-list">
+        {% for p in destacados %}{{ plato(p, lang) }}{% endfor %}
+      </ul>
+      <p class="mt"><a class="link-arrow" href="{{ page_url('carta', lang) }}">{{ 'Ver la carta completa' if es else 'See the full menu' }}{{ icon('flecha') }}</a></p>
+    </div>
+    <div class="foto-redonda">
+      {{ picture('acai', "(min-width: 900px) 540px, calc(100vw - 32px)") }}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="sala-titulo">
+  <div class="wrap sala-band">
+    <div class="foto-redonda">{{ picture('taller', "(min-width: 900px) 560px, calc(100vw - 32px)") }}</div>
+    <div>
+      <p class="eyebrow">{{ icon('sala') }} {{ 'Sala y eventos' if es else 'Events space' }}</p>
+      <h2 id="sala-titulo" class="mt-sm">{{ 'Una sala para tus planes' if es else 'A room for your plans' }}</h2>
+      <p class="mt-sm">{{ 'Junto a la cafetería tenemos una sala para celebraciones, reuniones de empresa, cenas o una clase para enseñar lo que sabes hacer. Con catering propio, dulce y salado.' if es else 'Next to the café we have a room for celebrations, business meetings, dinners or a class to share what you know. With our own sweet and savoury catering.' }}</p>
+      {% if precio_sala %}
+      <p class="precio-desde"><span>{{ 'Desde' if es else 'From' }}</span> <strong>{{ precio_corto(precio_sala, lang) }}</strong> <span>{{ 'la hora' if es else 'an hour' }}</span></p>
+      {% endif %}
+      <div class="btn-row">
+        <a class="btn btn--accent" href="{{ page_url('sala', lang) }}#formulario">{{ t(lang, 'f_enviar_sala') }}</a>
+        <a class="btn btn--ghost" href="{{ page_url('sala', lang) }}">{{ 'Tarifas y catering' if es else 'Rates and catering' }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if eventos %}
+<section class="section band" aria-labelledby="agenda-titulo">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{{ icon('calendario') }} {{ 'Agenda' if es else 'What’s on' }}</p>
+      <h2 id="agenda-titulo">{{ 'Próximos talleres y eventos' if es else 'Upcoming workshops and events' }}</h2>
+    </div>
+    {% include "partials/agenda.html" %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section {{ '' if eventos else 'band' }}" aria-labelledby="espacio-titulo">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{{ icon('luz') }} {{ 'El espacio' if es else 'The space' }}</p>
+      <h2 id="espacio-titulo">{{ 'Un sitio para quedar, trabajar y aprender' if es else 'A place to meet, work and learn' }}</h2>
+      <p>{{ 'Abrimos en 2024 en la Plaza Salesianos. Entre semana es un sitio tranquilo para trabajar un rato; los fines de semana se llena de amigos y familias.' if es else 'We opened in 2024 on Plaza Salesianos. On weekdays it is a quiet place to get some work done; at weekends it fills up with friends and families.' }}</p>
+    </div>
+    <div class="mosaico">
+      {% for n in ['salon', 'local-lleno', 'rincon', 'barra', 'bebidas', 'mesa-alta'] %}
+      {{ picture(n, "(min-width: 1200px) 380px, (min-width: 640px) 31vw, 46vw") }}
+      {% endfor %}
+    </div>
+    <p class="mt"><a class="link-arrow" href="{{ page_url('espacio', lang) }}">{{ 'Conoce el espacio' if es else 'Discover the space' }}{{ icon('flecha') }}</a></p>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="opiniones-titulo">
+  <div class="wrap">
+    <h2 id="opiniones-titulo" class="sr-only">{{ 'Opiniones y redes sociales' if es else 'Reviews and social media' }}</h2>
+    <div class="cards cards--2">
+      <div class="card">
+        <div class="estrellas" role="img" aria-label="{{ NEGOCIO.valoracion.nota }} / 5">{% for _ in range(4) %}{{ icon('estrella') }}{% endfor %}</div>
+        <p class="nota-grande">{{ NEGOCIO.valoracion.nota }}</p>
+        <p>{{ NEGOCIO.valoracion.num }} {{ t(lang, 'resenas_google') }} <span class="muted small">({{ NEGOCIO.valoracion.fecha if es else 'October 2026' }})</span></p>
+        <div class="btn-row">
+          <a class="btn btn--sm" href="{{ NEGOCIO.google_maps }}" rel="noopener" target="_blank">{{ t(lang, 'leer_resenas') }}</a>
+          <a class="btn btn--sm btn--ghost" href="{{ NEGOCIO.google_resenas }}" rel="noopener" target="_blank">{{ t(lang, 'escribir_resena') }}</a>
+        </div>
+      </div>
+      <div class="card card--accent">
+        {{ icon('instagram', 'icono-grande') }}
+        <h3>{{ NEGOCIO.instagram_usuario }}</h3>
+        <p>{{ 'Talleres, novedades de la carta y el dulce del día, primero en Instagram.' if es else 'Workshops, menu news and the pastry of the day, first on Instagram.' }}</p>
+        <div class="btn-row"><a class="btn btn--sm btn--light" href="{{ NEGOCIO.instagram }}" rel="noopener" target="_blank">{{ t(lang, 'ver_instagram') }}</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="faq-titulo">
+  <div class="wrap carta-grid">
+    <div class="section-head">
+      <h2 id="faq-titulo">{{ 'Preguntas frecuentes' if es else 'Frequently asked questions' }}</h2>
+      <p>{{ '¿No encuentras lo que buscas? Escríbenos a' if es else 'Can’t find what you need? Email us at' }} <a href="mailto:{{ NEGOCIO.email }}">{{ NEGOCIO.email }}</a>.</p>
+    </div>
+    <div class="faq">
+      {% for q, a in faq %}
+      <details><summary>{{ q }}</summary><p>{{ a }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/visita.html" %}
+{% endblock %}

@@ -1,0 +1,4 @@
+{# Datos del titular; si faltan, se marcan como pendientes de forma visible #}
+{% macro dato(valor, etiqueta) -%}
+{% if valor %}{{ valor }}{% else %}<span class="pendiente">[{{ etiqueta }}: {{ t(lang, 'pendiente')|lower }}]</span>{% endif %}
+{%- endmacro %}

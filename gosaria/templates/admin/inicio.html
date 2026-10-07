@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<h1>Panel de Gosaria</h1>
+<p class="adm-muted">Los cambios se ven en la web al momento.</p>
+<div class="adm-grid">
+  <a class="adm-card" href="{{ url_for('admin.carta', seccion='carta') }}"><strong>{{ resumen.platos }}</strong><span>platos en la carta</span></a>
+  <a class="adm-card" href="{{ url_for('admin.agenda') }}"><strong>{{ resumen.eventos }}</strong><span>eventos próximos</span></a>
+  <a class="adm-card" href="{{ url_for('admin.mensajes') }}"><strong>{{ resumen.mensajes }}</strong><span>mensajes recibidos</span></a>
+  <a class="adm-card" href="{{ url_for('admin.aviso') }}"><strong>Aviso</strong><span>barra destacada de la web</span></a>
+</div>
+{% if not smtp %}
+<p class="adm-aviso">El correo no está configurado: los mensajes de los formularios solo se guardan aquí, en <a href="{{ url_for('admin.mensajes') }}">Mensajes</a>. Para recibirlos también por correo, rellena SMTP_HOST, SMTP_USER y SMTP_PASSWORD en el archivo .env.</p>
+{% elif resumen.sin_correo %}
+<p class="adm-aviso">Hay {{ resumen.sin_correo }} mensaje(s) que no se pudieron enviar por correo. Revísalos en <a href="{{ url_for('admin.mensajes') }}">Mensajes</a>.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% set e = evento or {} %}
+{% block title %}Evento{% endblock %}
+{% block content %}
+<p><a class="adm-link" href="{{ url_for('admin.agenda') }}">← Agenda</a></p>
+<h1>{{ 'Editar evento' if evento and evento.id else 'Nuevo evento' }}</h1>
+{% if error %}<p class="adm-error" role="alert">{{ error }}</p>{% endif %}
+<form method="post" class="adm-form">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+  <div class="adm-2">
+    <div><label for="titulo_es">Título (español)</label><input id="titulo_es" name="titulo_es" required maxlength="120" value="{{ e.titulo_es or '' }}"></div>
+    <div><label for="titulo_en">Título (inglés)</label><input id="titulo_en" name="titulo_en" maxlength="120" value="{{ e.titulo_en or '' }}"></div>
+    <div><label for="desc_es">Descripción (español)</label><textarea id="desc_es" name="desc_es" rows="4" maxlength="800">{{ e.desc_es or '' }}</textarea></div>
+    <div><label for="desc_en">Descripción (inglés)</label><textarea id="desc_en" name="desc_en" rows="4" maxlength="800">{{ e.desc_en or '' }}</textarea></div>
+    <div><label for="inicio">Empieza</label><input id="inicio" name="inicio" type="datetime-local" required value="{{ e.inicio or '' }}"></div>
+    <div><label for="fin">Termina <span class="adm-muted">(opcional)</span></label><input id="fin" name="fin" type="datetime-local" value="{{ e.fin or '' }}"></div>
+    <div><label for="precio_es">Precio (español) <span class="adm-muted">p. ej. 25 €, plazas limitadas</span></label><input id="precio_es" name="precio_es" maxlength="80" value="{{ e.precio_es or '' }}"></div>
+    <div><label for="precio_en">Precio (inglés)</label><input id="precio_en" name="precio_en" maxlength="80" value="{{ e.precio_en or '' }}"></div>
+    <div><label for="enlace">Enlace de inscripción <span class="adm-muted">(opcional, https://…)</span></label><input id="enlace" name="enlace" type="url" value="{{ e.enlace or '' }}"></div>
+  </div>
+  <fieldset class="adm-checks"><legend>Opciones</legend>
+    <label><input type="checkbox" name="visible" value="1" {% if e.visible is not defined or e.visible %}checked{% endif %}> Visible en la web</label>
+  </fieldset>
+  <button type="submit" class="adm-btn">Guardar</button>
+</form>
+{% if evento and evento.id %}
+<form method="post" action="{{ url_for('admin.evento_borrar', evento_id=evento.id) }}" class="adm-borrar">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+  <button type="submit" class="adm-btn adm-btn--peligro">Eliminar este evento</button>
+</form>
+{% endif %}
+{% endblock %}

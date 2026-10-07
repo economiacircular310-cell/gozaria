@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, picture, plato, migas, campo, ocultos, privacidad, preload with context %}
+{% set hero_sizes = "(min-width: 1200px) 560px, (min-width: 900px) 45vw, calc(100vw - 32px)" %}
+
+{% block preload %}{{ preload('sala', hero_sizes) }}{% endblock %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap sala-band">
+    <div>
+      {{ migas(lang, t(lang, 'nav_sala')) }}
+      <h1>{{ 'Sala para eventos y talleres' if es else 'A room for events and workshops' }}</h1>
+      <p class="lead">{{ 'Una sala anexa a la cafetería, con mesas amarillas y grandes ventanales, para cumpleaños, reuniones, cenas o una clase para enseñar lo que sabes hacer.' if es else 'A room next to the café, with yellow tables and large windows, for birthdays, meetings, dinners or a class to share what you know.' }}</p>
+      {% if precio_sala %}<p class="precio-desde"><span>{{ 'Desde' if es else 'From' }}</span> <strong>{{ precio_corto(precio_sala, lang) }}</strong> <span>{{ 'la hora' if es else 'an hour' }}</span></p>{% endif %}
+      <div class="btn-row">
+        <a class="btn btn--accent" href="#formulario">{{ t(lang, 'f_enviar_sala') }}</a>
+        <a class="btn btn--ghost" href="#catering">{{ 'Ver el catering' if es else 'See catering' }}</a>
+      </div>
+    </div>
+    <div class="foto-redonda">{{ picture('sala', hero_sizes, eager=true) }}</div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="usos-titulo">
+  <div class="wrap carta-grid">
+    <div>
+      <h2 id="usos-titulo">{{ 'Para qué se usa la sala' if es else 'What the room is used for' }}</h2>
+      <ul class="lista-check mt">
+        {% for item in (['Cumpleaños y celebraciones', 'Reuniones con amigos y de empresa', 'Cenas y despedidas', 'Talleres y clases', 'Exposiciones de artistas y creadores locales'] if es else ['Birthdays and celebrations', 'Get-togethers and business meetings', 'Dinners and farewell parties', 'Workshops and classes', 'Exhibitions by local artists and creators']) %}
+        <li>{{ icon('check') }}<span>{{ item }}</span></li>
+        {% endfor %}
+      </ul>
+      {% if NEGOCIO.sala_aforo %}<p><strong>{{ 'Aforo' if es else 'Capacity' }}:</strong> {{ NEGOCIO.sala_aforo }}</p>{% endif %}
+      <p class="muted">{{ '¿Tienes una habilidad y quieres darla a conocer? Cuéntanos tu idea de taller y lo organizamos juntos.' if es else 'Have a skill you want to share? Tell us about your workshop idea and we will organise it together.' }}</p>
+    </div>
+    <div>
+      {% for s in tarifas %}
+      <h2>{{ s.nombre }}</h2>
+      <table class="tabla-precios mt">
+        <caption class="sr-only">{{ s.nombre }}</caption>
+        <tbody>
+          {% for p in s.platos %}
+          <tr><th scope="row">{{ p.nombre }}{% if p.desc %}<small>{{ p.desc }}</small>{% endif %}</th><td>{{ precio_corto(p.precio_cent, lang) }}{% if p.por_hora %}{{ t(lang, 'por_hora') }}{% endif %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endfor %}
+      <p class="small muted">{{ 'Precios con IVA incluido. El catering se presupuesta aparte.' if es else 'Prices include VAT. Catering is quoted separately.' }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-label="{{ 'Fotos de eventos en la sala' if es else 'Photos of events in the room' }}">
+  <div class="wrap mosaico mosaico--4">
+    {% for n in ['taller', 'catering-bowls', 'catering-tostas', 'fruta'] %}
+    {{ picture(n, "(min-width: 900px) 290px, (min-width: 640px) 31vw, 46vw") }}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section band" id="catering" aria-labelledby="catering-titulo">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{{ icon('brunch') }} Catering</p>
+      <h2 id="catering-titulo">{{ 'Catering dulce y salado' if es else 'Sweet and savoury catering' }}</h2>
+      <p>{{ 'Para eventos en la sala o para llevar. Si necesitas algo que no está en la lista, pregúntanos.' if es else 'For events in our room or to take away. If you need something that is not on the list, just ask.' }}</p>
+    </div>
+    <div class="carta-cols">
+      {% for s in catering %}
+      <section class="carta-cat">
+        <header><h3 class="h-cat">{{ s.nombre }}</h3></header>
+        <ul class="menu-list">{% for p in s.platos %}{{ plato(p, lang) }}{% endfor %}</ul>
+      </section>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if eventos %}
+<section class="section" aria-labelledby="agenda-titulo">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{{ icon('calendario') }} {{ 'Agenda' if es else 'What’s on' }}</p>
+      <h2 id="agenda-titulo">{{ 'Próximos talleres y eventos' if es else 'Upcoming workshops and events' }}</h2>
+    </div>
+    {% include "partials/agenda.html" %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section" id="formulario" aria-labelledby="form-titulo">
+  <div class="wrap carta-grid">
+    <div class="section-head">
+      <h2 id="form-titulo">{{ 'Pide presupuesto' if es else 'Request a quote' }}</h2>
+      <p>{{ 'Cuéntanos qué quieres celebrar y te enviaremos el presupuesto por correo. También puedes escribirnos a' if es else 'Tell us what you are planning and we will email you a quote. You can also write to' }} <a href="mailto:{{ NEGOCIO.email }}">{{ NEGOCIO.email }}</a>.</p>
+    </div>
+    <div>
+      {% if enviado %}
+      <div class="alerta alerta--ok" role="status" tabindex="-1" data-foco>{{ icon('check') }}<span>{{ t(lang, 'f_ok_sala') }}</span></div>
+      {% else %}
+      {% if errores or error_general %}
+      {% include "partials/form_sala.html" %}
+      {% else %}
+      <div class="form-lugar" data-form-diferido="tpl-form-sala"><noscript>{% include "partials/form_sala.html" %}</noscript></div>
+      <template id="tpl-form-sala">{% include "partials/form_sala.html" %}</template>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

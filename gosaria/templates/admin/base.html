@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}Panel{% endblock %} · Gosaria</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="{{ static_v('css/admin.css') }}">
+</head>
+<body>
+<header class="adm-top">
+  <a class="adm-marca" href="{{ url_for('admin.inicio') }}">Gosaria · Panel</a>
+  {% if session.get('admin') %}
+  <nav aria-label="Panel">
+    <a href="{{ url_for('admin.carta', seccion='carta') }}">Carta</a>
+    <a href="{{ url_for('admin.carta', seccion='catering') }}">Catering</a>
+    <a href="{{ url_for('admin.carta', seccion='tarifas') }}">Tarifas</a>
+    <a href="{{ url_for('admin.agenda') }}">Agenda</a>
+    <a href="{{ url_for('admin.aviso') }}">Aviso</a>
+    <a href="{{ url_for('admin.mensajes') }}">Mensajes</a>
+    <a href="/" target="_blank" rel="noopener">Ver la web ↗</a>
+  </nav>
+  <form method="post" action="{{ url_for('admin.logout') }}"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><button type="submit" class="adm-link">Salir</button></form>
+  {% endif %}
+</header>
+<main class="adm-main">
+  {% with mensajes_flash = get_flashed_messages() %}{% if mensajes_flash %}<div class="adm-ok" role="status">{% for m in mensajes_flash %}<p>{{ m }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

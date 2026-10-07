@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import migas with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'legal_cookies')) }}
+    <h1>{{ 'Política de cookies' if es else 'Cookie policy' }}</h1>
+    <p class="muted">{{ 'Última actualización: 6 de octubre de 2026' if es else 'Last updated: 6 October 2026' }}</p>
+  </div>
+</section>
+<div class="wrap section--tight">
+  <div class="prose">
+  {% if es %}
+    <p>Las cookies son pequeños archivos que una web guarda en tu navegador. Esta web usa el mínimo imprescindible y solo instala cookies opcionales si tú lo aceptas.</p>
+    <h2>Cookies que usamos</h2>
+    <table>
+      <thead><tr><th>Nombre</th><th>Titular</th><th>Para qué sirve</th><th>Duración</th><th>Tipo</th></tr></thead>
+      <tbody>
+        <tr><td>gosaria_session</td><td>gosariapamplona.es</td><td>Protege los formularios frente a envíos fraudulentos y mantiene la sesión del panel de gestión</td><td>Sesión (8 horas en el panel)</td><td>Técnica</td></tr>
+        <tr><td>gosaria_consent_v1 <span class="muted">(almacenamiento local)</span></td><td>gosariapamplona.es</td><td>Recuerda tu elección sobre las cookies</td><td>Hasta que la borres</td><td>Técnica</td></tr>
+        {% if GA_ID %}<tr><td>_ga, _ga_*</td><td>Google Ireland Ltd.</td><td>Estadísticas de visitas (Google Analytics)</td><td>2 años</td><td>Analítica, solo con tu consentimiento</td></tr>{% endif %}
+        <tr><td>NID y otras de Google</td><td>Google Ireland Ltd.</td><td>Funcionamiento del mapa de Google Maps</td><td>Según Google</td><td>De terceros, solo si pulsas «Cargar el mapa»</td></tr>
+      </tbody>
+    </table>
+    {% if not GA_ID %}<p>Ahora mismo no usamos cookies de analítica ni de publicidad.</p>{% endif %}
+    <h2>Cómo cambiar tu elección</h2>
+    {% if GA_ID %}<p><button type="button" class="btn btn--sm" data-abrir-cookies>{{ t(lang, 'cookies_configurar') }}</button></p>{% endif %}
+    <p>También puedes borrar o bloquear las cookies desde tu navegador: <a href="https://support.google.com/chrome/answer/95647" rel="noopener" target="_blank">Chrome</a>, <a href="https://support.mozilla.org/es/kb/Borrar%20cookies" rel="noopener" target="_blank">Firefox</a>, <a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" rel="noopener" target="_blank">Safari</a> o <a href="https://support.microsoft.com/es-es/microsoft-edge" rel="noopener" target="_blank">Edge</a>. Si bloqueas las técnicas, los formularios pueden dejar de funcionar.</p>
+    <p>Más información sobre cómo tratamos tus datos en la <a href="{{ page_url('privacidad', lang) }}">política de privacidad</a>.</p>
+  {% else %}
+    <p>Cookies are small files that a website stores in your browser. This website uses the bare minimum and only sets optional cookies if you agree.</p>
+    <h2>Cookies we use</h2>
+    <table>
+      <thead><tr><th>Name</th><th>Owner</th><th>Purpose</th><th>Duration</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>gosaria_session</td><td>gosariapamplona.es</td><td>Protects the forms against fraudulent submissions and keeps the admin panel session</td><td>Session (8 hours in the panel)</td><td>Technical</td></tr>
+        <tr><td>gosaria_consent_v1 <span class="muted">(local storage)</span></td><td>gosariapamplona.es</td><td>Remembers your cookie choice</td><td>Until you delete it</td><td>Technical</td></tr>
+        {% if GA_ID %}<tr><td>_ga, _ga_*</td><td>Google Ireland Ltd.</td><td>Visit statistics (Google Analytics)</td><td>2 years</td><td>Analytics, only with your consent</td></tr>{% endif %}
+        <tr><td>NID and other Google cookies</td><td>Google Ireland Ltd.</td><td>Make the Google Maps map work</td><td>Set by Google</td><td>Third-party, only if you click “Load the map”</td></tr>
+      </tbody>
+    </table>
+    {% if not GA_ID %}<p>We currently do not use analytics or advertising cookies.</p>{% endif %}
+    <h2>How to change your choice</h2>
+    {% if GA_ID %}<p><button type="button" class="btn btn--sm" data-abrir-cookies>{{ t(lang, 'cookies_configurar') }}</button></p>{% endif %}
+    <p>You can also delete or block cookies in your browser: <a href="https://support.google.com/chrome/answer/95647" rel="noopener" target="_blank">Chrome</a>, <a href="https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox" rel="noopener" target="_blank">Firefox</a>, <a href="https://support.apple.com/guide/safari/sfri11471/mac" rel="noopener" target="_blank">Safari</a> or <a href="https://support.microsoft.com/microsoft-edge" rel="noopener" target="_blank">Edge</a>. If you block technical cookies, the forms may stop working.</p>
+    <p>Find out more about how we handle your data in our <a href="{{ page_url('privacidad', lang) }}">privacy policy</a>.</p>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

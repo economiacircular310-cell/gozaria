@@ -1,0 +1,25 @@
+{% from "partials/macros.html" import icon, tabla_horario, mapa with context %}
+{% set es = lang == 'es' %}
+<section class="section band" aria-labelledby="visita-titulo" id="visita">
+  <div class="wrap visita">
+    <div>
+      <div class="section-head">
+        <h2 id="visita-titulo">{{ 'Ven a vernos' if es else 'Come and see us' }}</h2>
+        <p><span class="estado" data-estado data-abierto="{{ 1 if estado.abierto else 0 }}">{{ estado.texto }}</span></p>
+      </div>
+      <ul class="datos">
+        <li>{{ icon('pin') }}<span>{{ NEGOCIO.direccion.calle }}, {{ NEGOCIO.direccion.cp }} {{ NEGOCIO.direccion.ciudad }}<br><span class="muted small">{{ 'En el Segundo Ensanche, junto al parque de la Media Luna.' if es else 'In the Segundo Ensanche district, next to Media Luna park.' }}</span></span></li>
+        <li>{{ icon('correo') }}<a href="mailto:{{ NEGOCIO.email }}">{{ NEGOCIO.email }}</a></li>
+        {% if NEGOCIO.telefono %}<li>{{ icon('telefono') }}<a href="tel:{{ NEGOCIO.telefono|replace(' ', '') }}">{{ NEGOCIO.telefono }}</a></li>{% endif %}
+        {% if NEGOCIO.whatsapp %}<li>{{ icon('whatsapp') }}<a href="https://wa.me/{{ NEGOCIO.whatsapp }}" rel="noopener" target="_blank">WhatsApp</a></li>{% endif %}
+      </ul>
+      <h3 class="mb-sm">{{ t(lang, 'horario') }}</h3>
+      {{ tabla_horario(lang) }}
+      <div class="btn-row mt">
+        <a class="btn" href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ icon('pin') }}{{ t(lang, 'como_llegar') }}</a>
+        {% if page != 'contacto' %}<a class="btn btn--ghost" href="{{ page_url('contacto', lang) }}">{{ 'Escríbenos' if es else 'Write to us' }}</a>{% endif %}
+      </div>
+    </div>
+    {{ mapa(lang) }}
+  </div>
+</section>

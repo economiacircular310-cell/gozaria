@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="section">
+  <div class="wrap error-page">
+    <p class="eyebrow">400</p>
+    <h1>{{ 'La página ha caducado' if es else 'The page has expired' }}</h1>
+    <p class="lead">{{ 'Vuelve atrás, recarga la página e inténtalo de nuevo.' if es else 'Go back, reload the page and try again.' }}</p>
+    <div class="btn-row"><a class="btn" href="{{ page_url('inicio', lang) }}">{{ t(lang, 'volver_inicio') }}</a></div>
+  </div>
+</section>
+{% endblock %}

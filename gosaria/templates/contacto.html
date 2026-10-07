@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, migas, campo, ocultos, privacidad with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="page-head">
+  <div class="wrap">
+    {{ migas(lang, t(lang, 'nav_contacto')) }}
+    <h1>{{ 'Contacto y horario' if es else 'Contact and opening hours' }}</h1>
+    <p class="lead">{{ 'No hace falta reservar: ven cuando quieras. Para la sala, presupuestos o cualquier otra cosa, escríbenos.' if es else 'No booking needed: just come by. For the events room, quotes or anything else, write to us.' }}</p>
+  </div>
+</section>
+
+{% include "partials/visita.html" %}
+
+<section class="section" id="formulario" aria-labelledby="form-titulo">
+  <div class="wrap carta-grid">
+    <div>
+      <div class="section-head">
+        <h2 id="form-titulo">{{ 'Escríbenos' if es else 'Write to us' }}</h2>
+        <p>{{ 'Te responderemos por correo lo antes posible. Si es para la sala, usa' if es else 'We will reply by email as soon as we can. For the events room, use the' }} <a href="{{ page_url('sala', lang) }}#formulario">{{ 'el formulario de presupuesto' if es else 'quote request form' }}</a>.</p>
+      </div>
+      {% if enviado %}
+      <div class="alerta alerta--ok" role="status" tabindex="-1" data-foco>{{ icon('check') }}<span>{{ t(lang, 'f_ok') }}</span></div>
+      {% else %}
+      {% if errores or error_general %}
+      {% include "partials/form_contacto.html" %}
+      {% else %}
+      <div class="form-lugar" data-form-diferido="tpl-form-contacto"><noscript>{% include "partials/form_contacto.html" %}</noscript></div>
+      <template id="tpl-form-contacto">{% include "partials/form_contacto.html" %}</template>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div>
+      <h2 class="mb">{{ 'Preguntas frecuentes' if es else 'Frequently asked questions' }}</h2>
+      <div class="faq">
+        {% for q, a in faq %}
+        <details><summary>{{ q }}</summary><p>{{ a }}</p></details>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

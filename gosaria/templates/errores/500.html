@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% set es = lang == 'es' %}
+<section class="section">
+  <div class="wrap error-page">
+    <p class="eyebrow">500</p>
+    <h1>{{ 'Algo ha fallado' if es else 'Something went wrong' }}</h1>
+    <p class="lead">{{ 'Ha habido un error en la web. Vuelve a intentarlo en un momento o escríbenos a' if es else 'There was an error on the website. Please try again in a moment or email us at' }} <a href="mailto:{{ NEGOCIO.email }}">{{ NEGOCIO.email }}</a>.</p>
+    <div class="btn-row"><a class="btn" href="{{ page_url('inicio', lang) }}">{{ t(lang, 'volver_inicio') }}</a></div>
+  </div>
+</section>
+{% endblock %}

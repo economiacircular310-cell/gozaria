@@ -1,0 +1,11 @@
+Flask>=3.1,<4
+Flask-Compress>=1.15
+tzdata>=2024.1
+waitress>=3.0
+gunicorn>=22.0; platform_system != "Windows"
+
+# Solo para regenerar imágenes y tipografía (scripts/) y para las pruebas
+Pillow>=11.3
+fonttools>=4.50
+brotli>=1.1
+pytest>=8.0

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import icon, logo_completo with context %}
+
+{% block content %}
+{% set es = lang == 'es' %}
+<div class="wrap">
+  <div class="enlaces">
+    {{ logo_completo('logo-grande') }}
+    <h1 class="sr-only">{{ 'Enlaces de Gosaria' if es else 'Gosaria links' }}</h1>
+    <p><span class="estado" data-estado data-abierto="{{ 1 if estado.abierto else 0 }}">{{ estado.texto }}</span></p>
+    {% if aviso and aviso.get('aviso_activo') == '1' and aviso.get('aviso_enlace') %}
+    <a class="btn btn--accent" href="{{ aviso.aviso_enlace }}" rel="noopener" target="_blank">{{ aviso.get('aviso_enlace_' ~ lang) or aviso.get('aviso_enlace_es') }}{{ icon('trofeo') }}</a>
+    {% endif %}
+    <a class="btn" href="{{ page_url('carta', lang) }}?utm_source=instagram&amp;utm_medium=bio">{{ t(lang, 'ver_carta') }}{{ icon('carta') }}</a>
+    {% if NEGOCIO.glovo %}<a class="btn" href="{{ NEGOCIO.glovo }}" rel="noopener" target="_blank">{{ t(lang, 'pedir_domicilio') }}{{ icon('reparto') }}</a>{% endif %}
+    <a class="btn" href="{{ page_url('sala', lang) }}?utm_source=instagram&amp;utm_medium=bio#formulario">{{ 'Reservar la sala' if es else 'Book the room' }}{{ icon('sala') }}</a>
+    <a class="btn" href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ t(lang, 'como_llegar') }}{{ icon('pin') }}</a>
+    <a class="btn btn--ghost" href="{{ NEGOCIO.google_resenas }}" rel="noopener" target="_blank">{{ t(lang, 'escribir_resena') }}{{ icon('estrella') }}</a>
+    <a class="btn btn--ghost" href="{{ page_url('inicio', lang) }}?utm_source=instagram&amp;utm_medium=bio">gosariapamplona.es{{ icon('flecha') }}</a>
+  </div>
+</div>
+{% endblock %}

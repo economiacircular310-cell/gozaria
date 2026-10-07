@@ -1,0 +1,54 @@
+/* Panel de administración de Gosaria: sobrio y legible. */
+:root { --ink: #151315; --muted: #6a646b; --line: #e4ddd7; --bg: #f6f2ee; --accent: #ad2687; --danger: #b3261e; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg); }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+h1 { font-size: 1.8rem; margin: 0 0 8px; }
+h2 { font-size: 1.2rem; margin: 0; }
+.adm-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding: 12px 24px; background: var(--ink); color: #fff; }
+.adm-top a { color: #fff; text-decoration: none; }
+.adm-top nav { display: flex; flex-wrap: wrap; gap: 4px 16px; flex: 1; }
+.adm-top nav a:hover { text-decoration: underline; }
+.adm-top form { margin: 0; }
+.adm-top .adm-link { color: #fff; }
+.adm-marca { font-weight: 700; }
+.adm-main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 64px; }
+.adm-muted { color: var(--muted); font-size: .92rem; }
+.adm-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 8px; }
+.adm-acciones { display: flex; gap: 12px; align-items: center; }
+.adm-btn { display: inline-block; background: var(--ink); color: #fff; border: 0; border-radius: 999px; padding: 10px 18px; font-family: inherit; font-weight: 600; font-size: .95rem; line-height: 1.2; text-decoration: none; cursor: pointer; }
+.adm-btn:hover { background: var(--accent); color: #fff; }
+.adm-btn--sec { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
+.adm-btn--peligro { background: #fff; color: var(--danger); border: 1px solid var(--danger); }
+.adm-btn--peligro:hover { background: var(--danger); color: #fff; }
+.adm-link { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; }
+.adm-link--peligro { color: var(--danger); }
+.adm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 20px 0; }
+.adm-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; text-decoration: none; color: var(--ink); display: grid; gap: 4px; }
+.adm-card strong { font-size: 1.8rem; }
+.adm-card:hover { border-color: var(--accent); }
+.adm-cat, .adm-msg { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin: 18px 0; }
+.adm-tabla { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; }
+.adm-tabla th, .adm-tabla td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.adm-tabla th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.adm-num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.adm-oculto td { opacity: .55; }
+.adm-tag { display: inline-block; font-size: .75rem; font-weight: 600; background: #f8e7f2; color: #8a1e6b; border-radius: 999px; padding: 2px 8px; margin: 0 4px 4px 0; }
+.adm-tag--gris { background: #ece8e4; color: #48434a; }
+.adm-form { display: grid; gap: 16px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-top: 12px; }
+.adm-form label { display: block; font-weight: 600; margin-bottom: 4px; }
+.adm-form input:not([type=checkbox]), .adm-form textarea, .adm-form select { width: 100%; font: inherit; padding: 10px 12px; border: 1.5px solid #cfc6bf; border-radius: 10px; background: #fff; }
+.adm-2 { display: grid; gap: 14px 20px; }
+@media (min-width: 760px) { .adm-2 { grid-template-columns: 1fr 1fr; } }
+.adm-checks { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.adm-checks label { font-weight: 500; display: flex; gap: 8px; align-items: center; margin: 0; }
+.adm-checks input { width: 18px; height: 18px; accent-color: var(--accent); }
+.adm-borrar { margin-top: 24px; }
+.adm-form > .adm-btn { justify-self: start; }
+.adm-login { max-width: 420px; margin: 40px auto; }
+.adm-error { background: #fbe9e7; color: #6e1610; padding: 12px 14px; border-radius: 10px; }
+.adm-ok { background: #e6f3ea; color: #12401f; padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; }
+.adm-ok p { margin: 0; }
+.adm-aviso { background: #fbf1d4; padding: 12px 14px; border-radius: 10px; }
+.adm-texto { white-space: pre-wrap; background: var(--bg); padding: 12px; border-radius: 10px; }

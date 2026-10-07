@@ -1,0 +1,144 @@
+{
+  "_nota": "Contenido inicial. Sale de la carta y la carta de catering en PDF de octubre de 2026. Después se edita desde /admin.",
+  "ajustes": {
+    "aviso_activo": "1",
+    "aviso_es": "Somos finalistas a «Cafetería con más encanto» en los I Premios de Hostelería de Navarra.",
+    "aviso_en": "We are finalists for “Most charming café” at the 1st Navarra Hospitality Awards.",
+    "aviso_enlace": "https://www.instagram.com/stories/highlights/18062573183788525/",
+    "aviso_enlace_es": "Vota por nosotros",
+    "aviso_enlace_en": "Vote for us"
+  },
+  "eventos": [],
+  "categorias": [
+    {
+      "seccion": "carta", "slug": "cafeteria",
+      "nombre_es": "Cafetería y repostería", "nombre_en": "Coffee and pastries",
+      "nota_es": "Café de especialidad (espresso y filtro), tés, smoothies y zumos naturales. En la vitrina: cookies caseras, tartas, bizcochos y bollería del día. Pregunta en barra por las opciones sin gluten.",
+      "nota_en": "Specialty coffee (espresso and filter), teas, smoothies and fresh juices. In the display case: homemade cookies, cakes, sponge cakes and pastries of the day. Ask at the counter about gluten-free options.",
+      "platos": []
+    },
+    {
+      "seccion": "carta", "slug": "tostadas",
+      "nombre_es": "Tostadas", "nombre_en": "Toasts",
+      "nota_es": "En pan de masa madre (la cochinita y el pernil, en pan brioche).",
+      "nota_en": "On sourdough bread (cochinita and roast pork on brioche).",
+      "platos": [
+        {"nombre_es": "Jamón ibérico", "nombre_en": "Iberian ham", "desc_es": "Jamón ibérico, tomate rallado y aceite de oliva", "desc_en": "Iberian ham, grated tomato and olive oil", "precio_cent": 650},
+        {"nombre_es": "Aguacate y jamón ibérico", "nombre_en": "Avocado and Iberian ham", "desc_es": "Aguacate, jamón ibérico, tomates cherry y perlas de lima", "desc_en": "Avocado, Iberian ham, cherry tomatoes and lime pearls", "precio_cent": 750},
+        {"nombre_es": "Pera y queso", "nombre_en": "Pear and cheese", "desc_es": "Quesos brie y cabra, láminas de pera, miel, nueces caramelizadas y melaza de granada", "desc_en": "Brie and goat cheese, sliced pear, honey, caramelised walnuts and pomegranate molasses", "precio_cent": 750, "vegetariano": 1},
+        {"nombre_es": "Aguacate y salmón", "nombre_en": "Avocado and salmon", "desc_es": "Aguacate, salmón, tomates cherry, crema de queso y perlas de lima", "desc_en": "Avocado, salmon, cherry tomatoes, cream cheese and lime pearls", "precio_cent": 850, "destacado": 1},
+        {"nombre_es": "Mix de setas y hongos", "nombre_en": "Mixed mushrooms", "desc_es": "Setas y hongos confitados con queso parmesano", "desc_en": "Confit wild mushrooms with Parmesan", "precio_cent": 850, "vegetariano": 1},
+        {"nombre_es": "Huevo poché", "nombre_en": "Poached egg", "desc_es": "Aguacate, huevo poché, tomates cherry y salsa holandesa", "desc_en": "Avocado, poached egg, cherry tomatoes and hollandaise sauce", "precio_cent": 850, "vegetariano": 1, "destacado": 1},
+        {"nombre_es": "Cochinita", "nombre_en": "Cochinita", "desc_es": "Pan brioche, cochinita pibil, pico de gallo, guacamole, cebolla crujiente y sriracha", "desc_en": "Brioche, cochinita pibil, pico de gallo, guacamole, crispy onion and sriracha", "precio_cent": 850},
+        {"nombre_es": "Pernil asado", "nombre_en": "Roast pork", "desc_es": "Pan brioche, pernil asado a baja temperatura, queso, guacamole y pico de gallo", "desc_en": "Brioche, slow-roasted pork leg, cheese, guacamole and pico de gallo", "precio_cent": 850},
+        {"nombre_es": "Burrata y pesto", "nombre_en": "Burrata and pesto", "desc_es": "Tomates asados, burrata y pesto casero", "desc_en": "Roasted tomatoes, burrata and homemade pesto", "precio_cent": 850, "vegetariano": 1}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "bowls",
+      "nombre_es": "Bowls", "nombre_en": "Bowls",
+      "platos": [
+        {"nombre_es": "Coco y piña", "nombre_en": "Coconut and pineapple", "desc_es": "Yogur natural, piña, coco rallado, granola y miel", "desc_en": "Natural yogurt, pineapple, grated coconut, granola and honey", "precio_cent": 550, "vegetariano": 1, "destacado": 1},
+        {"nombre_es": "Mango y almendra", "nombre_en": "Mango and almond", "desc_es": "Yogur natural, mango, semillas de chía, almendra laminada y miel", "desc_en": "Natural yogurt, mango, chia seeds, flaked almonds and honey", "precio_cent": 550, "vegetariano": 1},
+        {"nombre_es": "Avena y fruta", "nombre_en": "Oats and fruit", "desc_es": "Yogur natural, avena, almendras, fruta de temporada y jarabe de arce", "desc_en": "Natural yogurt, oats, almonds, seasonal fruit and maple syrup", "precio_cent": 550, "vegetariano": 1}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "sandwiches",
+      "nombre_es": "Sándwiches", "nombre_en": "Sandwiches",
+      "platos": [
+        {"nombre_es": "Jamón y queso", "nombre_en": "Ham and cheese", "desc_es": "Pan brioche, jamón y queso", "desc_en": "Brioche, ham and cheese", "precio_cent": 700},
+        {"nombre_es": "Club", "nombre_en": "Club", "desc_es": "Pan brioche, pollo a la plancha, bacon, jamón, queso, mayonesa y mostaza, lechuga y tomate", "desc_en": "Brioche, grilled chicken, bacon, ham, cheese, mayo and mustard, lettuce and tomato", "precio_cent": 900},
+        {"nombre_es": "Pollo frito", "nombre_en": "Fried chicken", "desc_es": "Pollo frito, bacon, parmesano, salsa césar y lechuga", "desc_en": "Fried chicken, bacon, Parmesan, Caesar dressing and lettuce", "precio_cent": 900},
+        {"nombre_es": "Pastrami", "nombre_en": "Pastrami", "desc_es": "Pastrami, pepinillos, rúcula con pesto y salsa de mayonesa y mostaza", "desc_en": "Pastrami, pickles, rocket with pesto and mayo-mustard sauce", "precio_cent": 900}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "para-compartir",
+      "nombre_es": "Para compartir", "nombre_en": "To share",
+      "platos": [
+        {"nombre_es": "Patatas tres salsas", "nombre_en": "Fries with three sauces", "desc_es": "Alioli casero, mayo sriracha y miel y mostaza", "desc_en": "Homemade aioli, sriracha mayo and honey mustard", "precio_cent": 900, "vegetariano": 1},
+        {"nombre_es": "Nachos", "nombre_en": "Nachos", "desc_es": "Totopos, cochinita pibil, guacamole y pico de gallo", "desc_en": "Tortilla chips, cochinita pibil, guacamole and pico de gallo", "precio_cent": 1300},
+        {"nombre_es": "Fingers de pollo", "nombre_en": "Chicken fingers", "desc_es": "Solomillos de pollo empanado, salsa de miel y mostaza y barbacoa", "desc_en": "Breaded chicken tenderloins with honey mustard and barbecue sauce", "precio_cent": 900},
+        {"nombre_es": "Mix de mini croquetas", "nombre_en": "Mini croquette mix", "unidades_es": "8 uds", "unidades_en": "8 pcs", "desc_es": "Jamón ibérico, chipirón, buey y trufa", "desc_en": "Iberian ham, baby squid, beef and truffle", "precio_cent": 900},
+        {"nombre_es": "Croquetas caseras de jamón ibérico", "nombre_en": "Homemade Iberian ham croquettes", "unidades_es": "2 uds", "unidades_en": "2 pcs", "precio_cent": 400}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "ensaladas",
+      "nombre_es": "Ensaladas", "nombre_en": "Salads",
+      "platos": [
+        {"nombre_es": "César", "nombre_en": "Caesar", "desc_es": "Lechuga, tomates cherry, pollo empanado, picatostes, bacon, queso parmesano y salsa césar", "desc_en": "Lettuce, cherry tomatoes, breaded chicken, croutons, bacon, Parmesan and Caesar dressing", "precio_cent": 1090},
+        {"nombre_es": "Mediterránea", "nombre_en": "Mediterranean", "desc_es": "Tomate, bonito, pimientos asados y láminas de parmesano", "desc_en": "Tomato, bonito tuna, roasted peppers and Parmesan shavings", "precio_cent": 1090},
+        {"nombre_es": "Queso de cabra", "nombre_en": "Goat cheese", "desc_es": "Lechuga, tomate, cebolla y queso de cabra en pan tostado", "desc_en": "Lettuce, tomato, onion and goat cheese on toast", "precio_cent": 990, "vegetariano": 1}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "hamburguesas",
+      "nombre_es": "Hamburguesas", "nombre_en": "Burgers",
+      "nota_es": "Guarnición de patatas o boniato: +1 €.",
+      "nota_en": "Side of fries or sweet potato fries: +€1.",
+      "platos": [
+        {"nombre_es": "Smash burger clásica", "nombre_en": "Classic smash burger", "desc_es": "Doble smash de ternera, cebolla caramelizada, cheddar, bacon, pepinillos, mayonesa, lechuga y tomate", "desc_en": "Double beef smash patty, caramelised onion, cheddar, bacon, pickles, mayo, lettuce and tomato", "precio_cent": 1300, "destacado": 1},
+        {"nombre_es": "Burger de pollo", "nombre_en": "Chicken burger", "desc_es": "Pollo empanado, cheddar, mayonesa, lechuga y tomate", "desc_en": "Breaded chicken, cheddar, mayo, lettuce and tomato", "precio_cent": 1100},
+        {"nombre_es": "Smash burger de queso azul", "nombre_en": "Blue cheese smash burger", "desc_es": "Doble smash de ternera, cebolla crujiente, gorgonzola, mayonesa, lechuga y tomate", "desc_en": "Double beef smash patty, crispy onion, gorgonzola, mayo, lettuce and tomato", "precio_cent": 1300}
+      ]
+    },
+    {
+      "seccion": "carta", "slug": "bocadillos",
+      "nombre_es": "Bocadillos", "nombre_en": "Bocadillos",
+      "nota_es": "En pan de cristal.",
+      "nota_en": "On crispy pan de cristal bread.",
+      "platos": [
+        {"nombre_es": "Trufado de pollo", "nombre_en": "Truffled chicken", "desc_es": "Pechuga de pollo a la plancha, bacon, cebolla caramelizada y salsa trufada casera", "desc_en": "Grilled chicken breast, bacon, caramelised onion and homemade truffle sauce", "precio_cent": 1090},
+        {"nombre_es": "Cheesesteak", "nombre_en": "Cheesesteak", "desc_es": "Lomo bajo de vaca en tiras, cebolla y pimiento verde salteados y mezcla de quesos fundidos", "desc_en": "Strips of beef sirloin, sautéed onion and green pepper with melted cheese", "precio_cent": 1090}
+      ]
+    },
+    {
+      "seccion": "catering", "slug": "salado",
+      "nombre_es": "Salado", "nombre_en": "Savoury",
+      "platos": [
+        {"nombre_es": "Mini croissants de jamón y queso", "nombre_en": "Mini ham and cheese croissants", "unidades_es": "6 uds", "unidades_en": "6 pcs", "desc_es": "Recién horneados, rellenos de jamón york y queso", "desc_en": "Freshly baked, filled with ham and cheese", "precio_cent": 1200},
+        {"nombre_es": "Mini tostas de jamón ibérico", "nombre_en": "Mini Iberian ham toasts", "unidades_es": "6 uds", "unidades_en": "6 pcs", "desc_es": "Focaccia mediterránea, jamón ibérico, tomate natural triturado y aceite de oliva", "desc_en": "Mediterranean focaccia, Iberian ham, crushed fresh tomato and olive oil", "precio_cent": 1500},
+        {"nombre_es": "Mini tostas de salmón ahumado", "nombre_en": "Mini smoked salmon toasts", "unidades_es": "6 uds", "unidades_en": "6 pcs", "desc_es": "Focaccia mediterránea, salmón ahumado y queso crema", "desc_en": "Mediterranean focaccia, smoked salmon and cream cheese", "precio_cent": 1800},
+        {"nombre_es": "Mini croquetas", "nombre_en": "Mini croquettes", "unidades_es": "15 uds", "unidades_en": "15 pcs", "desc_es": "A elegir: jamón ibérico, buey, chipirones, trufa o setas", "desc_en": "Choose from Iberian ham, beef, baby squid, truffle or mushroom", "precio_cent": 1500},
+        {"nombre_es": "Mini hamburguesas con queso y cebolla caramelizada", "nombre_en": "Mini cheeseburgers with caramelised onion", "unidades_es": "12 uds", "unidades_en": "12 pcs", "desc_es": "Pan brioche artesano, ternera, cebolla caramelizada y cheddar", "desc_en": "Artisan brioche bun, beef, caramelised onion and cheddar", "precio_cent": 4200},
+        {"nombre_es": "Pan bao de cerdo en salsa teriyaki", "nombre_en": "Pork bao buns with teriyaki", "unidades_es": "12 uds", "unidades_en": "12 pcs", "desc_es": "Pan bao relleno de pernil asado con salsa teriyaki", "desc_en": "Bao buns filled with roast pork and teriyaki sauce", "precio_cent": 4800},
+        {"nombre_es": "Mini brioche de cochinita pibil", "nombre_en": "Mini cochinita pibil brioche", "unidades_es": "12 uds", "unidades_en": "12 pcs", "desc_es": "Pan brioche relleno de cochinita pibil con guacamole", "desc_en": "Brioche filled with cochinita pibil and guacamole", "precio_cent": 4200},
+        {"nombre_es": "Tortilla de patata casera", "nombre_en": "Homemade Spanish omelette", "desc_es": "Recién hecha, con o sin cebolla", "desc_en": "Freshly made, with or without onion", "precio_cent": 1800, "vegetariano": 1},
+        {"nombre_es": "Fingers de pollo", "nombre_en": "Chicken fingers", "desc_es": "Solomillos de pollo rebozados con salsas de miel y mostaza y barbacoa", "desc_en": "Breaded chicken tenderloins with honey mustard and barbecue sauces", "precio_cent": 900},
+        {"nombre_es": "Patatas bacon cheese Gosaria", "nombre_en": "Gosaria bacon cheese fries", "desc_es": "Patatas fritas, bacon, mezcla de quesos fundidos y salsa ranchera", "desc_en": "Fries, bacon, melted cheese blend and ranch sauce", "precio_cent": 1200}
+      ]
+    },
+    {
+      "seccion": "catering", "slug": "dulce",
+      "nombre_es": "Dulce", "nombre_en": "Sweet",
+      "platos": [
+        {"nombre_es": "Brochetas de fruta", "nombre_en": "Fruit skewers", "unidades_es": "16 uds", "unidades_en": "16 pcs", "desc_es": "Fruta de temporada con cobertura de chocolate", "desc_en": "Seasonal fruit with chocolate coating", "precio_cent": 3200, "vegetariano": 1},
+        {"nombre_es": "Bizcocho casero", "nombre_en": "Homemade sponge cake", "desc_es": "Naranja, limón o plátano con chocolate", "desc_en": "Orange, lemon, or banana with chocolate", "precio_cent": 2200, "vegetariano": 1},
+        {"nombre_es": "Mini bowls de yogur", "nombre_en": "Mini yogurt bowls", "unidades_es": "12 uds", "unidades_en": "12 pcs", "desc_es": "Yogur natural con fruta y toppings variados", "desc_en": "Natural yogurt with fruit and assorted toppings", "precio_cent": 3000, "vegetariano": 1},
+        {"nombre_es": "Brownie casero", "nombre_en": "Homemade brownie", "precio_cent": 2200, "vegetariano": 1},
+        {"nombre_es": "Cookies caseras con pepitas de chocolate", "nombre_en": "Homemade chocolate chip cookies", "unidades_es": "12 uds", "unidades_en": "12 pcs", "precio_cent": 3000, "vegetariano": 1},
+        {"nombre_es": "Tarta personalizada", "nombre_en": "Custom cake", "precio_cent": null, "vegetariano": 1}
+      ]
+    },
+    {
+      "seccion": "catering", "slug": "bebidas",
+      "nombre_es": "Bebidas", "nombre_en": "Drinks",
+      "platos": [
+        {"nombre_es": "Jarra de smoothie natural", "nombre_en": "Fresh smoothie jug", "unidades_es": "1 l", "unidades_en": "1 l", "desc_es": "Fresa y plátano, fresa y mango o frutos rojos", "desc_en": "Strawberry-banana, strawberry-mango or red berries", "precio_cent": 2000, "vegetariano": 1},
+        {"nombre_es": "Jarra de zumo de naranja", "nombre_en": "Orange juice jug", "unidades_es": "1 l", "unidades_en": "1 l", "desc_es": "Recién exprimido", "desc_en": "Freshly squeezed", "precio_cent": 1500, "vegetariano": 1}
+      ]
+    },
+    {
+      "seccion": "tarifas", "slug": "alquiler",
+      "nombre_es": "Alquiler de la sala", "nombre_en": "Room hire",
+      "platos": [
+        {"nombre_es": "Lunes a jueves", "nombre_en": "Monday to Thursday", "desc_es": "9:00 – 21:00", "desc_en": "9:00 – 21:00", "precio_cent": 2500, "por_hora": 1},
+        {"nombre_es": "Viernes y sábado", "nombre_en": "Friday and Saturday", "desc_es": "9:00 – 21:00", "desc_en": "9:00 – 21:00", "precio_cent": 3000, "por_hora": 1},
+        {"nombre_es": "Domingo", "nombre_en": "Sunday", "desc_es": "9:00 – 15:00", "desc_en": "9:00 – 15:00", "precio_cent": 3500, "por_hora": 1},
+        {"nombre_es": "Domingo tarde, festivos y noches", "nombre_en": "Sunday afternoon, holidays and nights", "desc_es": "Domingos de 15:00 a 00:00, festivos y horario nocturno", "desc_en": "Sundays 15:00 – 00:00, public holidays and night-time", "precio_cent": 5000, "por_hora": 1}
+      ]
+    }
+  ]
+}

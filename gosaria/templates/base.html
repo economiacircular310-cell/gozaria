@@ -1,0 +1,148 @@
+{% from "partials/macros.html" import icon, logo_compacto, logo_completo with context %}
+<!doctype html>
+<html lang="{{ lang }}"{% if GA_ID %} data-ga="{{ GA_ID }}"{% endif %}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ meta.title }}</title>
+{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
+{% if meta.noindex %}<meta name="robots" content="{{ 'noindex, nofollow' if config.NOINDEX_SITIO else 'noindex, follow' }}">{% endif %}
+{% if meta.canonical %}
+<link rel="canonical" href="{{ meta.canonical }}">
+{% for l, href in meta.alternates.items() %}<link rel="alternate" hreflang="{{ l }}" href="{{ href }}">
+{% endfor %}<link rel="alternate" hreflang="x-default" href="{{ meta.alternates['es'] }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gosaria">
+<meta property="og:title" content="{{ meta.title }}">
+<meta property="og:description" content="{{ meta.description }}">
+<meta property="og:url" content="{{ meta.canonical }}">
+<meta property="og:image" content="{{ SITE_URL }}/static/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ 'Gosaria, café de especialidad y brunch en Pamplona' if lang == 'es' else 'Gosaria, specialty coffee and brunch in Pamplona' }}">
+<meta property="og:locale" content="{{ 'es_ES' if lang == 'es' else 'en_GB' }}">
+<meta property="og:locale:alternate" content="{{ 'en_GB' if lang == 'es' else 'es_ES' }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endif %}
+<meta name="theme-color" content="#ad2687">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="{{ static_v('favicon-32.png') }}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="{{ static_v('apple-touch-icon.png') }}">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preload" href="/static/fonts/instrument-sans-latin.woff2?v=2" as="font" type="font/woff2" crossorigin>
+{% block preload %}{% endblock %}
+<style nonce="{{ csp_nonce() }}">{{ css_en_linea() }}</style>
+<script nonce="{{ csp_nonce() }}">document.documentElement.classList.add("js");</script>
+{{ jsonld if jsonld }}
+</head>
+<body>
+<a class="skip" href="#main">{{ t(lang, 'skip') }}</a>
+
+{% if aviso and aviso.get('aviso_activo') == '1' and aviso.get('aviso_' ~ lang) %}
+<div class="aviso">
+  <div class="wrap">
+    <p>{{ icon('trofeo') }}{{ aviso['aviso_' ~ lang] }}</p>
+    {% if aviso.get('aviso_enlace') %}<a href="{{ aviso.aviso_enlace }}" rel="noopener" target="_blank">{{ aviso.get('aviso_enlace_' ~ lang) or aviso.get('aviso_enlace_es') }}</a>{% endif %}
+  </div>
+</div>
+{% endif %}
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="{{ page_url('inicio', lang) }}" aria-label="{{ 'Gosaria, ir al inicio' if lang == 'es' else 'Gosaria, go to home page' }}">{{ logo_compacto() }}</a>
+    <nav id="nav" class="nav" aria-label="{{ t(lang, 'nav_label') }}">
+      <ul>
+        {% for p in ['carta', 'sala', 'espacio', 'contacto'] %}
+        <li><a href="{{ page_url(p, lang) }}"{% if page == p %} aria-current="page"{% endif %}>{{ t(lang, 'nav_' ~ p) }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="lang" href="{{ page_url(page or 'inicio', otro) }}" hreflang="{{ otro }}" lang="{{ otro }}" aria-label="{{ t(lang, 'lang_switch_label') }}">{{ t(lang, 'lang_switch_short') }}</a>
+      <a class="btn btn--sm header-cta" href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ icon('pin') }}{{ t(lang, 'como_llegar') }}</a>
+      <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false">{{ icon('menu') }}{{ t(lang, 'menu') }}</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        {{ logo_completo('footer-logo') }}
+        <p class="small">{{ t(lang, 'footer_tagline') }}</p>
+      </div>
+      <div>
+        <h2>{{ t(lang, 'direccion') }}</h2>
+        <p>{{ NEGOCIO.direccion.calle }}<br>{{ NEGOCIO.direccion.cp }} {{ NEGOCIO.direccion.ciudad }} ({{ NEGOCIO.direccion.provincia }})</p>
+        <p><a href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ t(lang, 'como_llegar') }}</a></p>
+      </div>
+      <div>
+        <h2>{{ t(lang, 'horario') }}</h2>
+        <ul class="footer-horario small">
+          {% if lang == 'es' %}
+          <li>Lunes a jueves: 9:00 – 21:00</li><li>Viernes y sábado: 9:00 – 23:00</li><li>Domingo: 9:00 – 15:00</li>
+          {% else %}
+          <li>Monday–Thursday: 9:00 – 21:00</li><li>Friday–Saturday: 9:00 – 23:00</li><li>Sunday: 9:00 – 15:00</li>
+          {% endif %}
+        </ul>
+      </div>
+      <div>
+        <h2>{{ t(lang, 'nav_contacto') }}</h2>
+        <ul>
+          <li><a href="mailto:{{ NEGOCIO.email }}">{{ NEGOCIO.email }}</a></li>
+          {% if NEGOCIO.telefono %}<li><a href="tel:{{ NEGOCIO.telefono|replace(' ', '') }}">{{ NEGOCIO.telefono }}</a></li>{% endif %}
+        </ul>
+        <div class="redes" aria-label="{{ t(lang, 'siguenos') }}">
+          <a href="{{ NEGOCIO.instagram }}" rel="noopener" target="_blank" aria-label="Instagram {{ NEGOCIO.instagram_usuario }}">{{ icon('instagram') }}</a>
+          {% if NEGOCIO.facebook %}<a href="{{ NEGOCIO.facebook }}" rel="noopener" target="_blank" aria-label="Facebook">{{ icon('facebook') }}</a>{% endif %}
+          {% if NEGOCIO.tiktok %}<a href="{{ NEGOCIO.tiktok }}" rel="noopener" target="_blank" aria-label="TikTok">{{ icon('tiktok') }}</a>{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© {{ ahora().year }} Gosaria. {{ t(lang, "derechos") }} · <a href="https://filipostudio.com/" rel="noopener">{{ "Diseñado por" if lang == "es" else "Designed by" }} Filipo Studio</a></p>
+      <ul>
+        <li><a href="{{ page_url('aviso_legal', lang) }}">{{ t(lang, 'legal_aviso') }}</a></li>
+        <li><a href="{{ page_url('privacidad', lang) }}">{{ t(lang, 'legal_privacidad') }}</a></li>
+        <li><a href="{{ page_url('cookies', lang) }}">{{ t(lang, 'legal_cookies') }}</a></li>
+        {% if GA_ID %}<li><button type="button" class="boton-texto" data-abrir-cookies>{{ t(lang, 'cookies_configurar') }}</button></li>{% endif %}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<nav class="barra-movil" aria-label="{{ 'Accesos rápidos' if lang == 'es' else 'Quick links' }}">
+  <a href="{{ page_url('carta', lang) }}">{{ icon('carta') }}{{ t(lang, 'nav_carta') }}</a>
+  <a href="{{ NEGOCIO.como_llegar }}" rel="noopener" target="_blank">{{ icon('pin') }}{{ t(lang, 'como_llegar') }}</a>
+  {% if NEGOCIO.telefono %}<a href="tel:{{ NEGOCIO.telefono|replace(' ', '') }}">{{ icon('telefono') }}{{ t(lang, 'llamar') }}</a>{% endif %}
+  {% if NEGOCIO.whatsapp %}<a href="https://wa.me/{{ NEGOCIO.whatsapp }}" rel="noopener" target="_blank">{{ icon('whatsapp') }}{{ t(lang, 'whatsapp') }}</a>{% endif %}
+  {% if not NEGOCIO.telefono and not NEGOCIO.whatsapp %}<a href="{{ page_url('sala', lang) }}">{{ icon('sala') }}{{ 'Sala' if lang == 'es' else 'Events' }}</a>{% endif %}
+</nav>
+
+{% if GA_ID %}
+<div class="cookies" id="cookies" role="dialog" aria-modal="false" aria-labelledby="cookies-titulo" hidden>
+  <h2 id="cookies-titulo">{{ t(lang, 'ck_title') }}</h2>
+  <p>{{ t(lang, 'ck_text') }} <a href="{{ page_url('cookies', lang) }}">{{ t(lang, 'ck_more') }}</a>.</p>
+  <div class="cookies-opciones" id="cookies-opciones" hidden>
+    <label><input type="checkbox" checked disabled> {{ t(lang, 'ck_necessary') }}<span>{{ t(lang, 'ck_necessary_desc') }}</span></label>
+    <label><input type="checkbox" id="ck-analitica"> {{ t(lang, 'ck_analytics') }}<span>{{ t(lang, 'ck_analytics_desc') }}</span></label>
+    <button type="button" class="btn btn--sm btn--accent" data-ck="guardar">{{ t(lang, 'ck_save') }}</button>
+  </div>
+  <div class="btn-row cookies-botones">
+    <button type="button" class="btn btn--sm" data-ck="rechazar">{{ t(lang, 'ck_reject') }}</button>
+    <button type="button" class="btn btn--sm" data-ck="aceptar">{{ t(lang, 'ck_accept') }}</button>
+    <button type="button" class="boton-enlace" data-ck="configurar">{{ t(lang, 'ck_settings') }}</button>
+  </div>
+</div>
+{% endif %}
+
+<script type="application/json" id="horario-data">{{ {"dias": horario_js(), "cierres": NEGOCIO.cierres, "textos": {"abierto": t(lang, 'abierto'), "cerrado": t(lang, 'cerrado'), "hasta": t(lang, 'hasta'), "abre_hoy": t(lang, 'abre_hoy'), "abre_manana": t(lang, 'abre_manana'), "abre_dia": t(lang, 'abre_dia'), "dias": ['lunes','martes','miércoles','jueves','viernes','sábado','domingo'] if lang == 'es' else ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']}}|tojson }}</script>
+<script src="{{ static_v('js/site.js') }}" defer></script>
+</body>
+</html>
