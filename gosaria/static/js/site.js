@@ -194,40 +194,12 @@
   }
 
   /* --- Formularios: evitar doble envío y llevar el foco al error ---------- */
-  function activarForm(form) {
-    if (!form || form.getAttribute("data-activo")) return;
-    form.setAttribute("data-activo", "1");
+  $all("form[data-form]").forEach(function (form) {
     form.addEventListener("submit", function () {
       var boton = $("button[type='submit']", form);
       if (boton) { boton.disabled = true; boton.setAttribute("aria-busy", "true"); }
     });
-  }
-  $all("form[data-form]").forEach(activarForm);
-
-  /* Los formularios largos se insertan al acercarse a ellos: así el navegador no los
-     analiza (autorrelleno) durante la carga. Sin JavaScript se muestran con <noscript>. */
-  function montarForm(lugar) {
-    if (lugar.getAttribute("data-montado")) return;
-    var plantilla = doc.getElementById(lugar.getAttribute("data-form-diferido"));
-    if (!plantilla) return;
-    lugar.setAttribute("data-montado", "1");
-    lugar.textContent = "";
-    lugar.appendChild(plantilla.content.cloneNode(true));
-    activarForm($("form", lugar));
-  }
-  var diferidos = $all("[data-form-diferido]");
-  if (diferidos.length) {
-    var montarTodos = function () { diferidos.forEach(montarForm); };
-    if (location.hash === "#formulario" || !("IntersectionObserver" in window)) {
-      montarTodos();
-    } else {
-      var io = new IntersectionObserver(function (entradas) {
-        entradas.forEach(function (e) { if (e.isIntersecting) { montarForm(e.target); io.unobserve(e.target); } });
-      }, { rootMargin: "1000px 0px" });
-      diferidos.forEach(function (d) { io.observe(d); });
-      window.addEventListener("hashchange", function () { if (location.hash === "#formulario") montarTodos(); });
-    }
-  }
+  });
   var resumen = $("[data-foco]");
   if (resumen) { resumen.focus(); }
 })();

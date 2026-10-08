@@ -12,6 +12,8 @@ from pathlib import Path
 
 from flask import current_app, g
 
+from . import horario
+
 SCHEMA = """
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS categorias (
@@ -207,7 +209,7 @@ def guardar_mensaje(tipo: str, nombre: str, email: str, telefono: str, datos: di
     db = get_db()
     cur = db.execute(
         "INSERT INTO mensajes (tipo, creado, nombre, email, telefono, datos) VALUES (?, ?, ?, ?, ?, ?)",
-        (tipo, datetime.now().isoformat(timespec="seconds"), nombre, email, telefono,
+        (tipo, horario.ahora().replace(tzinfo=None).isoformat(timespec="seconds"), nombre, email, telefono,
          json.dumps(datos, ensure_ascii=False)),
     )
     db.commit()

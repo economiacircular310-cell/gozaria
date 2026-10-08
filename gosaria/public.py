@@ -177,7 +177,7 @@ def sala(lang):
         enviado=request.args.get("enviado") == "1",
         datos=datos, errores=errores, error_general=error_general,
         hoy=momento.date().isoformat(),
-        jsonld=seo.jsonld(seo.negocio(lang), seo.eventos(lang, eventos), _migas(lang, "sala")),
+        jsonld=seo.jsonld(seo.negocio(lang), seo.sala(lang), seo.eventos(lang, eventos), _migas(lang, "sala")),
         **_form_ctx(lang),
     )
 

@@ -2,7 +2,7 @@
 
 Revisión del código de `gosaria-web-servidor.zip` (Flask + SQLite + Jinja) hecha el 7 de octubre de 2026. Cada punto de la auditoría se ha comprobado leyendo el código y renderizando las páginas con la configuración de la demo (`deploy/env.demo`).
 
-> **Estado:** pendiente de aprobación. Este documento no cambia nada en la web.
+> **Estado:** fase 0 hecha (ver «6. Registro de fases»). Las fases 1 a 6 están pendientes de las decisiones del apartado 5.
 
 ---
 
@@ -83,3 +83,20 @@ Las fases 2, 3 y 4 comparten la misma pasarela de pago y el mismo «carrito», q
    - ¿Las de setas existen también en carta?
 6. **`tests/` y `scripts/`:** ¿los tenéis? Si no, en la fase 0 se escriben pruebas nuevas.
 7. **`DESPLIEGUE.md`:** el que adjuntaste es de Casa Chute. ¿El staging de Gosaria está montado con `deploy/instalar.sh` de este proyecto?
+
+## 6. Registro de fases
+
+### Fase 0 · Arreglos y base (hecha)
+
+| Cambio | Archivos | Punto |
+|---|---|---|
+| Una variable vacía en el `.env` (`CLAVE=`) usa el valor por defecto. El botón «Escribir una reseña» deja de salir con `href=""` (mientras no haya enlace propio, lleva a la ficha de Google Maps) y un `SMTP_PORT=` vacío ya no impide arrancar | `gosaria/config.py` | 3 |
+| Los formularios de contacto y de la sala se renderizan una sola vez (sin la copia en `<noscript>` + `<template>` ni el montaje diferido en JS) | `sala.html`, `contacto.html`, `static/js/site.js` | 2 |
+| El panel usa la hora de Pamplona, no la del servidor, para los eventos «próximos», la etiqueta «Pasado» y la fecha de los mensajes | `gosaria/admin.py`, `gosaria/db.py` | — |
+| En el panel, un «orden» o un precio mal escritos muestran un aviso en vez de un error 500 | `gosaria/admin.py` | — |
+| `servesCuisine` en el idioma de la página | `gosaria/seo.py` | 11 |
+| La sala, como `EventVenue` (con aforo si se rellena `SALA_AFORO`), enlazada con la cafetería (`containsPlace` / `containedInPlace`) | `gosaria/seo.py`, `gosaria/public.py` | 11 |
+| `Event` con zona horaria de Pamplona (`+01:00`/`+02:00`), imagen y la sala como lugar | `gosaria/seo.py` | 11 |
+| Suite de pruebas `pytest` en `tests/` | `tests/`, `pytest.ini` | — |
+
+No se ha tocado el `noindex` del staging.

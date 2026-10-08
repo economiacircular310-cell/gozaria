@@ -29,7 +29,8 @@ _load_dotenv(BASE_DIR / ".env")
 
 
 def env(key: str, default: str = "") -> str:
-    return os.environ.get(key, default).strip()
+    """Valor de la variable o, si no existe o está vacía (CLAVE= en el .env), el valor por defecto."""
+    return os.environ.get(key, "").strip() or default
 
 
 def env_bool(key: str, default: bool = False) -> bool:

@@ -9,7 +9,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect, render_templa
                    request, session, url_for)
 from werkzeug.security import check_password_hash
 
-from . import security
+from . import horario, security
 from .db import get_db
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -87,7 +87,7 @@ def inicio():
     resumen = {
         "platos": db.execute("SELECT COUNT(*) FROM platos p JOIN categorias c ON c.id = p.categoria_id WHERE c.seccion = 'carta'").fetchone()[0],
         "eventos": db.execute("SELECT COUNT(*) FROM eventos WHERE COALESCE(NULLIF(fin, ''), inicio) >= ?",
-                              (datetime.now().strftime("%Y-%m-%dT%H:%M"),)).fetchone()[0],
+                              (_ahora(),)).fetchone()[0],
         "mensajes": db.execute("SELECT COUNT(*) FROM mensajes").fetchone()[0],
         "sin_correo": db.execute("SELECT COUNT(*) FROM mensajes WHERE enviado_email = 0").fetchone()[0],
     }
@@ -110,6 +110,11 @@ def carta():
     return render_template("admin/carta.html", seccion=seccion, categorias=cats, platos=platos)
 
 
+def _ahora() -> str:
+    """Fecha y hora de Pamplona (no la del servidor), en el formato de los eventos."""
+    return horario.ahora().strftime("%Y-%m-%dT%H:%M")
+
+
 def _precio_a_cent(texto: str) -> int | None:
     texto = (texto or "").strip().replace("€", "").replace(",", ".")
     if not texto:
@@ -117,12 +122,25 @@ def _precio_a_cent(texto: str) -> int | None:
     return round(float(texto) * 100)
 
 
+def _orden(texto: str | None) -> int:
+    """Campo «orden»: vacío = 0. Lanza ValueError si no es un número entero."""
+    return int((texto or "").strip() or 0)
+
+
+ERROR_ORDEN = "El orden debe ser un número entero, por ejemplo 3."
+
+
 def _form_plato() -> tuple[dict, str | None]:
     f = request.form
+    error = None
     try:
         precio = _precio_a_cent(f.get("precio", ""))
     except ValueError:
-        return {}, "El precio debe ser un número, por ejemplo 8,50."
+        precio, error = None, "El precio debe ser un número, por ejemplo 8,50."
+    try:
+        orden = _orden(f.get("orden"))
+    except ValueError:
+        orden, error = 0, error or ERROR_ORDEN
     datos = {
         "nombre_es": f.get("nombre_es", "").strip(),
         "nombre_en": f.get("nombre_en", "").strip(),
@@ -135,11 +153,11 @@ def _form_plato() -> tuple[dict, str | None]:
         "vegetariano": int(f.get("vegetariano") == "1"),
         "destacado": int(f.get("destacado") == "1"),
         "visible": int(f.get("visible") == "1"),
-        "orden": int(f.get("orden") or 0),
+        "orden": orden,
     }
     if not datos["nombre_es"]:
         return datos, "El nombre en español es obligatorio."
-    return datos, None
+    return datos, error
 
 
 @bp.route("/plato/nuevo", methods=["GET", "POST"])
@@ -202,10 +220,13 @@ def categoria(cat_id: int | None = None):
     if request.method == "POST":
         f = request.form
         datos = {k: f.get(k, "").strip() for k in ("nombre_es", "nombre_en", "nota_es", "nota_en")}
-        datos["orden"] = int(f.get("orden") or 0)
+        try:
+            datos["orden"] = _orden(f.get("orden"))
+        except ValueError:
+            datos["orden"], error = 0, ERROR_ORDEN
         if not datos["nombre_es"]:
             error = "El nombre en español es obligatorio."
-        else:
+        if not error:
             if actual:
                 db.execute("UPDATE categorias SET nombre_es=?, nombre_en=?, nota_es=?, nota_en=?, orden=? WHERE id=?",
                            (*datos.values(), cat_id))
@@ -237,7 +258,7 @@ def categoria_borrar(cat_id: int):
 @login_requerido
 def agenda():
     eventos = get_db().execute("SELECT * FROM eventos ORDER BY inicio DESC").fetchall()
-    return render_template("admin/agenda.html", eventos=eventos, ahora=datetime.now().strftime("%Y-%m-%dT%H:%M"))
+    return render_template("admin/agenda.html", eventos=eventos, ahora=_ahora())
 
 
 @bp.route("/evento/nuevo", methods=["GET", "POST"])

@@ -99,12 +99,7 @@
       {% if enviado %}
       <div class="alerta alerta--ok" role="status" tabindex="-1" data-foco>{{ icon('check') }}<span>{{ t(lang, 'f_ok_sala') }}</span></div>
       {% else %}
-      {% if errores or error_general %}
       {% include "partials/form_sala.html" %}
-      {% else %}
-      <div class="form-lugar" data-form-diferido="tpl-form-sala"><noscript>{% include "partials/form_sala.html" %}</noscript></div>
-      <template id="tpl-form-sala">{% include "partials/form_sala.html" %}</template>
-      {% endif %}
       {% endif %}
     </div>
   </div>

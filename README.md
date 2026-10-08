@@ -24,7 +24,7 @@ En desarrollo puedes poner `GOSARIA_ENV=development` y `ADMIN_PASSWORD=algo` en 
 
 > **Windows y rutas largas:** si el proyecto está dentro de una carpeta con una ruta muy larga, `venv` puede fallar. En ese caso crea el entorno en una ruta corta (por ejemplo `C:\venvs\gosaria`).
 
-Pruebas automáticas (45 pruebas: páginas, redirecciones, formularios, seguridad, panel):
+Pruebas automáticas (páginas, redirecciones, formularios, seguridad, panel, horario y datos estructurados):
 
 ```bash
 python -m pytest -q
@@ -113,6 +113,8 @@ Copia de seguridad: basta con guardar `instance/gosaria.sqlite3` y el archivo `.
 - [ ] Revisión de los textos legales por un profesional.
 
 ## 7. Mantenimiento técnico
+
+> `scripts/` y `assets_src/` no venían en el ZIP de esta versión: hay que recuperarlos del proyecto original antes de regenerar fotos o tipografía.
 
 - **Fotos nuevas:** copiarlas en `assets_src/fotos/`, añadirlas a `FOTOS` en `scripts/build_assets.py` y ejecutar `python scripts/build_assets.py` (genera AVIF y WebP en 6 tamaños, iconos e imagen para redes).
 - **Tipografía:** `python scripts/build_font.py` (Instrument Sans, licencia OFL, recortada a los caracteres que usa la web).

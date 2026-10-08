@@ -2,26 +2,50 @@
 from __future__ import annotations
 
 import json
+import re
+from datetime import datetime
 
 from markupsafe import Markup
 
 from .config import NEGOCIO, Config
-from .horario import schema_horario
+from .horario import TZ, schema_horario
 from .i18n import PAGES
 
 URL = Config.SITE_URL
+ID_NEGOCIO = "/#negocio"
+ID_SALA = PAGES["sala"]["es"] + "#sala"
 
 
 def _abs(path: str) -> str:
     return URL + path
 
 
-def negocio(lang: str) -> dict:
+def _direccion() -> dict:
     d = NEGOCIO["direccion"]
+    return {
+        "@type": "PostalAddress",
+        "streetAddress": d["calle"],
+        "postalCode": d["cp"],
+        "addressLocality": d["ciudad"],
+        "addressRegion": d["provincia"],
+        "addressCountry": d["pais"],
+    }
+
+
+def _geo() -> dict:
+    return {"@type": "GeoCoordinates", "latitude": NEGOCIO["geo"]["lat"], "longitude": NEGOCIO["geo"]["lng"]}
+
+
+def _fecha(dt: datetime) -> str:
+    """Fecha ISO 8601 con la zona horaria de Pamplona (+01:00 o +02:00 según el horario de verano)."""
+    return (dt if dt.tzinfo else dt.replace(tzinfo=TZ)).isoformat()
+
+
+def negocio(lang: str) -> dict:
     data = {
         "@context": "https://schema.org",
         "@type": "CafeOrCoffeeShop",
-        "@id": _abs("/#negocio"),
+        "@id": _abs(ID_NEGOCIO),
         "name": "Gosaria",
         "alternateName": "Gosaria Pamplona · Espacio de conexión",
         "description": (
@@ -34,19 +58,14 @@ def negocio(lang: str) -> dict:
         "logo": _abs("/static/icon-512.png"),
         "email": NEGOCIO["email"],
         "priceRange": NEGOCIO["rango_precio"],
-        "servesCuisine": ["Café de especialidad", "Brunch", "Repostería"],
+        "servesCuisine": (["Café de especialidad", "Brunch", "Repostería"] if lang == "es"
+                          else ["Specialty coffee", "Brunch", "Pastries"]),
         "acceptsReservations": False,
         "hasMenu": _abs(PAGES["carta"][lang]),
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": d["calle"],
-            "postalCode": d["cp"],
-            "addressLocality": d["ciudad"],
-            "addressRegion": d["provincia"],
-            "addressCountry": d["pais"],
-        },
-        "geo": {"@type": "GeoCoordinates", "latitude": NEGOCIO["geo"]["lat"], "longitude": NEGOCIO["geo"]["lng"]},
+        "address": _direccion(),
+        "geo": _geo(),
         "hasMap": NEGOCIO["google_maps"],
+        "containsPlace": {"@id": _abs(ID_SALA)},
         "openingHoursSpecification": schema_horario(),
         "amenityFeature": [
             {"@type": "LocationFeatureSpecification", "name": "Pet friendly", "value": True},
@@ -56,6 +75,35 @@ def negocio(lang: str) -> dict:
     }
     if NEGOCIO["telefono"]:
         data["telephone"] = NEGOCIO["telefono"]
+    return data
+
+
+def sala(lang: str) -> dict:
+    """La sala anexa como EventVenue, dentro de la cafetería."""
+    data = {
+        "@context": "https://schema.org",
+        "@type": "EventVenue",
+        "@id": _abs(ID_SALA),
+        "name": "Sala de Gosaria" if lang == "es" else "Gosaria events room",
+        "description": (
+            "Sala anexa a la cafetería, con mesas amarillas y grandes ventanales, para cumpleaños, reuniones, "
+            "cenas, talleres, clases y exposiciones. Se alquila por horas, con catering propio."
+            if lang == "es" else
+            "A room next to the café, with yellow tables and large windows, for birthdays, meetings, dinners, "
+            "workshops, classes and exhibitions. Hired by the hour, with our own catering."
+        ),
+        "url": _abs(PAGES["sala"][lang]),
+        "image": [_abs("/static/img/sala-1081.webp"), _abs("/static/img/taller-1280.webp")],
+        "address": _direccion(),
+        "geo": _geo(),
+        "containedInPlace": {"@id": _abs(ID_NEGOCIO)},
+        "amenityFeature": [
+            {"@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": True},
+        ],
+    }
+    aforo = re.match(r"\s*(\d+)", NEGOCIO["sala_aforo"] or "")
+    if aforo:
+        data["maximumAttendeeCapacity"] = int(aforo.group(1))
     return data
 
 
@@ -110,23 +158,24 @@ def migas(lang: str, items: list[tuple[str, str]]) -> dict:
 
 
 def eventos(lang: str, lista: list[dict]) -> list[dict]:
-    d = NEGOCIO["direccion"]
+    lugar = {
+        "@type": "EventVenue",
+        "@id": _abs(ID_SALA),
+        "name": "Sala de Gosaria" if lang == "es" else "Gosaria events room",
+        "address": _direccion(),
+    }
     return [
         {
             "@context": "https://schema.org",
             "@type": "Event",
             "name": e["titulo"],
             "description": e["desc"],
-            "startDate": e["inicio"].isoformat(),
-            **({"endDate": e["fin"].isoformat()} if e["fin"] else {}),
+            "startDate": _fecha(e["inicio"]),
+            **({"endDate": _fecha(e["fin"])} if e["fin"] else {}),
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "eventStatus": "https://schema.org/EventScheduled",
-            "location": {
-                "@type": "Place",
-                "name": "Gosaria",
-                "address": {"@type": "PostalAddress", "streetAddress": d["calle"], "postalCode": d["cp"],
-                            "addressLocality": d["ciudad"], "addressCountry": d["pais"]},
-            },
+            "image": [_abs("/static/img/taller-1280.webp")],
+            "location": lugar,
             "organizer": {"@type": "Organization", "name": "Gosaria", "url": URL},
         }
         for e in lista
